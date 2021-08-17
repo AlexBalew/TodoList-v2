@@ -7,6 +7,8 @@ export type TaskType = {
     isDone: boolean
 }
 
+
+ ///test
 export type ToDoListPropsType = {
     listTitle: string
     tasks: Array<TaskType>
