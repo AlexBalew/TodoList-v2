@@ -1,0 +1,22 @@
+.APP {
+    display: inline-flex;
+    column-gap: 20px;
+    padding: 10px;
+
+}
+
+.error {
+    border-color: red;
+}
+
+.error-message {
+    color: red;
+}
+
+.active-filter-type {
+    color: darkcyan;
+}
+
+.isDone {
+    opacity: 50%;
+}
