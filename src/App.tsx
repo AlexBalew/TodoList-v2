@@ -18,16 +18,6 @@ export type TasksStateType = {
 
 function App() {
 
-   /* let [tasksObj, setTasks] = useState<Array<TaskType>>([
-        {id: v1(), title: "CSS", isDone: true},
-        {id: v1(), title: "HTML", isDone: true},
-        {id: v1(), title: "JS", isDone: false},
-        {id: v1(), title: "React", isDone: false},
-        {id: v1(), title: "nodeJS", isDone: false},
-    ])*/
-
-    /* let [filter, setFilter] = useState<FilterValuesType>('All')*/
-
     const changeFilter = (value: FilterValuesType, tlID: string) => {
         let TD = todolists.find(tl => tl.id === tlID)
         if (TD) {
@@ -37,7 +27,7 @@ function App() {
     }
 
     const deleteTask = (tID: string, tlID: string ) => {
-        tasksObj[tID] = tasksObj[tlID].filter(t => t.id !== tID)
+        tasksObj[tlID] = tasksObj[tlID].filter(t => t.id !== tID)
         setTasksObj({...tasksObj})
     }
 
@@ -52,6 +42,23 @@ function App() {
         if (task) {
             task.isDone = isDone
             setTasksObj({...tasksObj})
+        }
+    }
+
+    function checkTitleChanging(taskID: string, newTitle: string, tlID: string) {
+        let task = tasksObj[tlID].find(t => t.id === taskID)
+        if (task) {
+            task.title = newTitle
+            setTasksObj({...tasksObj})
+        }
+    }
+
+    function onChangeTDTitle(newTDTitle: string , tlID: string) {
+        let newTDListTitle = todolists.find(tl => tl.id === tlID)
+        if (newTDListTitle) {
+            newTDListTitle.listTitle = newTDTitle
+            setTodolists([...todolists])
+
         }
     }
 
@@ -123,6 +130,8 @@ function App() {
                         checkChanging={checkChanging}
                         filter={tl.filter}
                         removeTodoList={removeTodolist}
+                        checkTitleChanging={checkTitleChanging}
+                        onChangeTDTitle={onChangeTDTitle}
                     />
                 })
             }
