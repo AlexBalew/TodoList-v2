@@ -1,47 +1,53 @@
+import {Button, IconButton, TextField} from "@material-ui/core";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import {AddBox} from "@material-ui/icons";
 
 export type AddItemFormPropsType = {
-    addItem: (title: string) => void
+    callback: (title: string) => void
 }
 
 export function AddItemForm(props: AddItemFormPropsType) {
 
-    const [title, setTitle] = useState('')
+    let [title, setTitle] = useState('')
+    let [error, setError] = useState('')
 
-    const [error, setError] = useState('')
-
-    const changeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChangeNewTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
-
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError('')
-        if (e.key === 'Enter' && title !== '') {
-            props.addItem(title.trim())
+        if (e.key === 'Enter' && title.trim() !== '') {
+            props.callback(title)
             setTitle('')
         }
         if (e.key === 'Enter' && title.trim() === '') {
-            setError("Field is required")
+            setError('Insert Title')
         }
     }
 
-    const buttonAddTask = () => {
+    const addTaskButton = () => {
         if (title.trim() !== '') {
-            props.addItem(title)
+            props.callback(title)
             setTitle('')
         } else {
-            setError("Field is required")
+            setError('Insert TaskName')
         }
-
     }
 
-    return <div>
-        <input value={title}
-               onChange={changeTitleHandler}
-               onKeyPress={onKeyPressHandler}
-               className={error ? 'error' : ''}
-        />
-        <button onClick={buttonAddTask}>+</button>
-        {error && <div className='error-message'> {error} </div>}
-    </div>
+    return (
+        <div>
+            <TextField
+                size={'small'}
+                variant={'outlined'}
+                value={title}
+                onChange={onChangeNewTaskTitleHandler}
+                onKeyPress={onKeyPressHandler}
+                error={!!error}
+                label='Title'
+                helperText={error}/>
+            <IconButton color={'secondary'} size={'small'} onClick={addTaskButton}>
+                <AddBox />
+            </IconButton>
+        </div>
+    )
 }
