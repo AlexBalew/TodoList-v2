@@ -152,8 +152,8 @@ function App() {
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <Menu/>
                     </IconButton>
-                    <Typography variant="h6" className={classes.title}>
-                        News
+                    <Typography variant="h6" className={classes.title} align='center'>
+                        ToDoList
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
