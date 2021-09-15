@@ -1,5 +1,6 @@
 import {stateType} from "../App";
 import {v1} from "uuid";
+import { addTDlType, RemoveTDlType } from "./todolist.reducer";
 
 
 export const tasksReducer = (state: stateType, action: ActionSType): stateType => {
@@ -35,6 +36,14 @@ export const tasksReducer = (state: stateType, action: ActionSType): stateType =
                     ? {...t, isDone: action.isDone} : t)
             }
         }
+        case 'ADD_TODOLIST' : {
+            return {...state, [action.todolistId]: []}
+        }
+        case 'REMOVE_TODOLIST' : {
+            let copyState = {...state}
+            delete copyState[action.id]
+            return copyState
+        }
         default:
             return state
     }
@@ -42,7 +51,7 @@ export const tasksReducer = (state: stateType, action: ActionSType): stateType =
 }
 
 
-type ActionSType = deleteTaskType | addTaskACType | onChangeTitleType | changeTaskStatusACType
+type ActionSType = RemoveTDlType | addTDlType | deleteTaskType | addTaskACType | onChangeTitleType | changeTaskStatusACType
 
 
 type deleteTaskType = ReturnType<typeof deleteTaskAC>

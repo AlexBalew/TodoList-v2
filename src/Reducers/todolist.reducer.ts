@@ -9,7 +9,7 @@ export const todolistsReducer = (state: todoListsType, action: ActionSType): tod
         }
         case 'ADD_TODOLIST' : {
             return [...state, {
-                todolistID: v1(),
+                todolistID: action.todolistId,
                 todoListTitle: action.todoListTitle,
                 filter: 'all'
             }]
@@ -30,7 +30,7 @@ export const todolistsReducer = (state: todoListsType, action: ActionSType): tod
 type ActionSType = RemoveTDlType | addTDlType | changeTDlTitleType | changeTDlFilterType
 
 
-type RemoveTDlType = ReturnType<typeof RemoveTDlAC>
+export type RemoveTDlType = ReturnType<typeof RemoveTDlAC>
 
 export const RemoveTDlAC = (todolistID: string) => {
     return {
@@ -39,12 +39,13 @@ export const RemoveTDlAC = (todolistID: string) => {
     } as const
 }
 
-type addTDlType = ReturnType<typeof addTDlAC>
+export type addTDlType = ReturnType<typeof addTDlAC>
 
 export const addTDlAC = (todoListTitle: string) => {
     return {
         type: 'ADD_TODOLIST',
-        todoListTitle
+        todoListTitle,
+        todolistId: v1()
     } as const
 }
 
