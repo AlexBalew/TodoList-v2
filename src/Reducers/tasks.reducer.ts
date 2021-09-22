@@ -1,16 +1,43 @@
 import {stateType} from "../App";
 import {v1} from "uuid";
-import { addTDlType, RemoveTDlType } from "./todolist.reducer";
+import {addTDlType, RemoveTDlType, todolistID1, todolistID2, todolistID3, todolistID4} from "./todolist.reducer";
 
 
-export const tasksReducer = (state: stateType, action: ActionSType): stateType => {
+let initialState: stateType = {
+    [todolistID1]: [
+        {id: v1(), taskName: 'sleep', isDone: true},
+        {id: v1(), taskName: 'drink', isDone: false},
+        {id: v1(), taskName: 'rave', isDone: false},
+        {id: v1(), taskName: 'repeat', isDone: true},
+    ],
+    [todolistID2]: [
+        {id: v1(), taskName: 'Metallica', isDone: true},
+        {id: v1(), taskName: 'Neuro', isDone: false},
+        {id: v1(), taskName: 'Ghost', isDone: false},
+        {id: v1(), taskName: 'Liquid', isDone: true},
+    ],
+    [todolistID3]: [
+        {id: v1(), taskName: 'Seven', isDone: true},
+        {id: v1(), taskName: 'Night', isDone: false},
+        {id: v1(), taskName: 'Family Guy', isDone: false},
+        {id: v1(), taskName: 'South Park', isDone: true}
+    ],
+    [todolistID4]: [
+        {id: v1(), taskName: 'Train UseStyles', isDone: false},
+        {id: v1(), taskName: 'Find out how to set up A background theme', isDone: false},
+        {id: v1(), taskName: 'Create own custom style for + buttons', isDone: false},
+        {id: v1(), taskName: 'Push it to GitHub', isDone: false}
+    ],
+}
+
+export const tasksReducer = (state: stateType = initialState, action: ActionSType): stateType => {
     switch (action.type) {
         case 'DELETE_TASK' : {
+            debugger
             return {
                 ...state,
                 [action.todolistID]: state[action.todolistID].filter(t => t.id !== action.id)
             }
-            //return state[action.todolistID].filter(t => t.id !== action.id)
         }
         case 'ADD_TASK' : {
             return {
@@ -51,7 +78,13 @@ export const tasksReducer = (state: stateType, action: ActionSType): stateType =
 }
 
 
-type ActionSType = RemoveTDlType | addTDlType | deleteTaskType | addTaskACType | onChangeTitleType | changeTaskStatusACType
+type ActionSType =
+    RemoveTDlType
+    | addTDlType
+    | deleteTaskType
+    | addTaskACType
+    | onChangeTitleType
+    | changeTaskStatusACType
 
 
 type deleteTaskType = ReturnType<typeof deleteTaskAC>
