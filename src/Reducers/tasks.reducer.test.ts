@@ -1,7 +1,7 @@
 import {v1} from "uuid";
 import {stateType} from "../App";
 import {addTaskAC, changeTaskStatusAC, deleteTaskAC, onChangeTitleAC, tasksReducer} from "./tasks.reducer";
-import {addTDlAC, RemoveTDlAC} from "./todolist.reducer";
+import {addTDlAC, removeTDlAC} from "./todolist.reducer";
 
 
 test('exact task should be removed from exact array', () => {
@@ -265,7 +265,7 @@ test('property with todolistId should be deleted', () => {
         ],
     }
 
-    const action = RemoveTDlAC(todolistID3);
+    const action = removeTDlAC(todolistID3);
 
     const endState = tasksReducer(startState, action)
 
