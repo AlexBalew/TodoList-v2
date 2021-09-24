@@ -24,14 +24,15 @@ let initialState: stateType = {
     ],
     [todolistID4]: [
         {id: v1(), taskName: 'Train UseStyles', isDone: false},
-        {id: v1(), taskName: 'Find out how to set up A background theme', isDone: false},
-        {id: v1(), taskName: 'Create own custom style for + buttons', isDone: false},
+        {id: v1(), taskName: 'Set up a background theme', isDone: false},
+        {id: v1(), taskName: 'Create style for + buttons', isDone: false},
         {id: v1(), taskName: 'Push it to GitHub', isDone: false}
     ],
 }
 
 export const tasksReducer = (state: stateType = initialState, action: ActionSType): stateType => {
     switch (action.type) {
+
         case 'DELETE_TASK' : {
             debugger
             return {
@@ -50,6 +51,7 @@ export const tasksReducer = (state: stateType = initialState, action: ActionSTyp
             }
         }
         case 'CHANGE_TASK_TITLE' : {
+            debugger
             return {
                 ...state,
                 [action.todolistID]: state[action.todolistID].map(t => t.id === action.id

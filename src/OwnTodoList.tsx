@@ -37,7 +37,7 @@ export function OwnTodoList(props: ToDoListPropsType) {
         }
 
         const onChangeTitleHandler = (newValue: string) => {
-            props.onChangeTitle(t.id, newValue, props.id)
+            props.onChangeTitle(props.id, t.id, newValue)
         }
 
         return <li key={t.id} className={t.isDone ? 'completedTask' : ''}>
@@ -64,11 +64,11 @@ export function OwnTodoList(props: ToDoListPropsType) {
     }
 
     const ChangeTDListTitle = (newTitle: string) => {
-        props.changeTDListTitleAPP(newTitle, props.id)
+        props.changeTDListTitleAPP(props.id, newTitle)
     }
 
     const addTaskBridge = (title: string) => {
-        props.addTask(title, props.id)
+        props.addTask(props.id, title)
     }
 
 
