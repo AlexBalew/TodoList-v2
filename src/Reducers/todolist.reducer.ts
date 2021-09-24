@@ -20,7 +20,7 @@ export const todolistsReducer = (state: todoListsType = initialState, action: Ac
         }
         case 'ADD_TODOLIST' : {
             return [...state, {
-                todolistID: action.todolistID,
+                todolistID: action.todolistId,
                 todoListTitle: action.todoListTitle,
                 filter: 'all'
             }]
@@ -56,7 +56,7 @@ export const addTDlAC = (todoListTitle: string) => {
     return {
         type: 'ADD_TODOLIST',
         todoListTitle,
-        todolistID: v1()
+        todolistId: v1()
     } as const
 }
 

@@ -43,8 +43,8 @@ function App() {
     let tasks = useSelector<mainReducerType, stateType>(state => state.tasks)
 
 
-    const addTask = (newTaskTitle: string, tlID: string) => {
-        dispatch(addTaskAC(newTaskTitle, tlID))
+    const addTask = (tlID: string, newTaskTitle: string) => {
+        dispatch(addTaskAC(tlID, newTaskTitle))
     }
 
     const changeTaskStatus = (tID: string, isDone: boolean, tlID: string) => {
@@ -52,11 +52,11 @@ function App() {
     }
 
     const deleteTask = (tID: string, tlID: string) => {
-        dispatch(deleteTaskAC(tID, tlID))
+        dispatch(deleteTaskAC(tlID, tID))
     }
 
-    const onChangeTaskTitle = (tID: string, newValue: string, tlID: string) => {
-        dispatch(onChangeTitleAC(tID, newValue, tlID))
+    const onChangeTaskTitle = (tlID: string, tID: string, newValue: string) => {
+        dispatch(onChangeTitleAC(tlID, tID, newValue))
     }
 
     const changeFilter = (filter: FilterType, tlID: string) => {
@@ -71,8 +71,8 @@ function App() {
         dispatch(addTDlAC(todoListTitle))
     }
 
-    const changeTDListTitleAPP = (newTitle: string, tlID: string) => {
-        dispatch(changeTDlTitleAC(newTitle, tlID))
+    const changeTDListTitleAPP = (tlID: string, newTitle: string) => {
+        dispatch(changeTDlTitleAC(tlID, newTitle))
     }
 
     const classes = useStyles();
