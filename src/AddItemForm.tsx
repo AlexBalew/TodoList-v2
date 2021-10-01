@@ -1,4 +1,4 @@
-import {Button, IconButton, TextField} from "@material-ui/core";
+import {IconButton, TextField} from "@material-ui/core";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {AddBox} from "@material-ui/icons";
 
@@ -6,7 +6,9 @@ export type AddItemFormPropsType = {
     callback: (title: string) => void
 }
 
-export function AddItemForm(props: AddItemFormPropsType) {
+export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
+
+    console.log('AddItemForm rendered')
 
     let [title, setTitle] = useState('')
     let [error, setError] = useState('')
@@ -15,7 +17,9 @@ export function AddItemForm(props: AddItemFormPropsType) {
         setTitle(e.currentTarget.value)
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError('')
+        if (error !== null) {
+            setError('')
+        }
         if (e.key === 'Enter' && title.trim() !== '') {
             props.callback(title)
             setTitle('')
@@ -46,8 +50,8 @@ export function AddItemForm(props: AddItemFormPropsType) {
                 label='Title'
                 helperText={error}/>
             <IconButton color={'secondary'} size={'small'} onClick={addTaskButton}>
-                <AddBox />
+                <AddBox/>
             </IconButton>
         </div>
     )
-}
+})

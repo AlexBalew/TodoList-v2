@@ -34,7 +34,6 @@ export const tasksReducer = (state: stateType = initialState, action: ActionSTyp
     switch (action.type) {
 
         case 'DELETE_TASK' : {
-            debugger
             return {
                 ...state,
                 [action.todolistID]: state[action.todolistID].filter(t => t.id !== action.id)
@@ -51,7 +50,6 @@ export const tasksReducer = (state: stateType = initialState, action: ActionSTyp
             }
         }
         case 'CHANGE_TASK_TITLE' : {
-            debugger
             return {
                 ...state,
                 [action.todolistID]: state[action.todolistID].map(t => t.id === action.id
