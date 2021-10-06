@@ -31,14 +31,7 @@ export type ToDoListPropsType = {
 export const OwnTodoList = React.memo((props: ToDoListPropsType) => {
 
     console.log('Todolist rendered')
-
-    let mappedTasksFromAllTasks = props.tasks.map(t => <Task key={t.id}
-                                                             task={t}
-                                                             deleteTask={props.deleteTask}
-                                                             changeTaskStatus={props.changeTaskStatus}
-                                                             onChangeTitle={props.onChangeTitle}
-                                                             todolistId={props.id} />)
-
+    
     const allFilter = useCallback(() => {
         props.changeFilter('all', props.id)
     }, [props.changeFilter, props.id])
@@ -82,7 +75,14 @@ export const OwnTodoList = React.memo((props: ToDoListPropsType) => {
 
             <div>
                 <ul>
-                    {mappedTasksFromAllTasks}
+                    {
+                        tasksForTDList.map(t => <Task key={t.id}
+                                                                 task={t}
+                                                                 deleteTask={props.deleteTask}
+                                                                 changeTaskStatus={props.changeTaskStatus}
+                                                                 onChangeTitle={props.onChangeTitle}
+                                                                 todolistId={props.id} />)
+                    }
                 </ul>
                 <Button color={'default'}
                         variant={props.filter === 'all' ? 'outlined' : 'text'}

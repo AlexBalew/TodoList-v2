@@ -38,8 +38,6 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
 
-    console.log('APP rendered')
-
     let dispatch = useDispatch();
     let todolists = useSelector<mainReducerType, todoListsType>(state => state.todoLists)
     let tasks = useSelector<mainReducerType, stateType>(state => state.tasks)
@@ -62,7 +60,7 @@ function App() {
     }, [dispatch])
 
     const changeFilter = useCallback((filter: FilterType, tlID: string) => {
-        dispatch(changeTDlFilterAC(tlID, filter))
+        dispatch(changeTDlFilterAC(filter, tlID))
     }, [dispatch])
 
     const removeTDFunc = useCallback((tlID: string) => {

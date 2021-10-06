@@ -29,7 +29,7 @@ export const todolistsReducer = (state: todoListsType = initialState, action: Ac
             return state.map(tl => tl.todolistID === action.id ? {...tl, todoListTitle: action.title} : tl)
         }
         case 'CHANGE_TDL_FILTER' : {
-            return state.map(tl => tl.todolistID === action.id ? {...tl, filter: action.filter} : tl)
+            return state.map(tl => tl.todolistID === action.tlID ? {...tl, filter: action.filter} : tl)
         }
         default:
             return state
@@ -73,10 +73,10 @@ export const changeTDlTitleAC = (todolistID: string, todoListTitle: string) => {
 
 type changeTDlFilterType = ReturnType<typeof changeTDlFilterAC>
 
-export const changeTDlFilterAC = (todolistID: string, filter: FilterType) => {
+export const changeTDlFilterAC = (filter: FilterType, tlID: string) => {
     return {
         type: 'CHANGE_TDL_FILTER',
-        id: todolistID,
-        filter
+        filter,
+        tlID,
     } as const
 }
