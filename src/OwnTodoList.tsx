@@ -31,7 +31,7 @@ export type ToDoListPropsType = {
 export const OwnTodoList = React.memo((props: ToDoListPropsType) => {
 
     console.log('Todolist rendered')
-    
+
     const allFilter = useCallback(() => {
         props.changeFilter('all', props.id)
     }, [props.changeFilter, props.id])
