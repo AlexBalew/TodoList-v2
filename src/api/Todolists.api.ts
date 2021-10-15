@@ -39,34 +39,40 @@ type DeleteTodolistResponseType = { ///all types in generic one
     data: {}
 }*/
 
-export type ResponseType<D> = {
+export type ResponseType<T = {}> = {
     resultCode: number
     messages: Array<string>
     fieldsErrors: Array<string>
-    data: D
+    data: T
 }
 
-/*
-export type TasksResponseType = {
-    items: Array<Task>
-    Items: {
-        description: string
-        title: string
-        completed: boolean
-        status: number
-        priority: number
-        startDate: string
-        deadline: string
-        id: string
-        todoListId: string
-        order: number
-        addedDate: string
-    }
+export type ResponseTaskEntityType = {
+    description: string
+    title: string
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
+    id: string
+    todoListId: string
+    order: number
+    addedDate: string
+}
+
+export type ResponseTasksType = {
+    items: Array<ResponseTaskEntityType>
     totalCount: number
-    error: (string)
+    error: string | null
 }
-*/
 
+export type UpdateModelType = {
+    title: string
+    description: string | null
+    status: number
+    priority: number
+    startDate: string | null
+    deadline: string | null
+}
 
 export const todolistsAPI = {
     getTDLists() {
@@ -76,18 +82,32 @@ export const todolistsAPI = {
         return instance.post<ResponseType<{ item: TodolistType }>>("todo-lists", {title})
     },
     deleteTDLists(todolistId: string) {
-        return instance.delete<ResponseType<{}> | []>(`todo-lists/${todolistId}`)
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}`)
     },
     updateTDLists(todolistId: string, title: string) {
-        return instance.put<ResponseType<{}>>(`todo-lists/${todolistId}`, {title})
+        return instance.put<ResponseType>(`todo-lists/${todolistId}`, {title})
     }
 }
 
 export const tasksAPI = {
     getTasks(todolistId: string) {
-        return instance.get(`todo-lists/${todolistId}/tasks`)
+        return instance.get<ResponseTasksType>(`todo-lists/${todolistId}/tasks`)
     },
     createTask(todolistId: string, title: string) {
-        return instance.post(`todo-lists/${todolistId}`, {title})
+        return instance.post<ResponseTasksType>(`todo-lists/${todolistId}/tasks`, {title})
+    },
+    deleteTask(todolistId: string, taskId: string) {
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
+    },
+    updateTask(todolistId: string, taskId: string, model: UpdateModelType) {
+        return instance.put<ResponseTasksType>(`todo-lists/${todolistId}/tasks/${taskId}`,
+            {
+                title: model.title,
+                description: model.description,
+                deadline: model.deadline,
+                status: model.status,
+                priority: model.priority,
+                startDate: model.startDate
+            })
     }
 }
