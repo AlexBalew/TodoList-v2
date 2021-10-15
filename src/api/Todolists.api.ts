@@ -65,7 +65,7 @@ export type ResponseTasksType = {
     error: string | null
 }
 
-type UpdateModelType = {
+export type UpdateModelType = {
     title: string
     description: string | null
     status: number
@@ -100,6 +100,14 @@ export const tasksAPI = {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
     updateTask(todolistId: string, taskId: string, model: UpdateModelType) {
-return instance.put<ResponseTasksType>(`todo-lists/${todolistId}/tasks/${taskId}`, {title: model.title})
+        return instance.put<ResponseTasksType>(`todo-lists/${todolistId}/tasks/${taskId}`,
+            {
+                title: model.title,
+                description: model.description,
+                deadline: model.deadline,
+                status: model.status,
+                priority: model.priority,
+                startDate: model.startDate
+            })
     }
 }
