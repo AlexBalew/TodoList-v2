@@ -1,89 +1,65 @@
 import {v1} from "uuid";
-import {FilterType, todoListsType} from "../App";
-import {addTDlAC, changeTDlFilterAC, changeTDlTitleAC, removeTDlAC, todolistsReducer} from "./todolist.reducer";
+import {TodoListsType} from "../App";
+import {
+    addTDlAC,
+    changeTDlFilterAC,
+    changeTDlTitleAC,
+    FilterType,
+    removeTDlAC,
+    todolistsReducer
+} from "./todolist.reducer";
 
+let todolistID1: string
+let todolistID2: string
+let todolistID3: string
+let todolistID4: string
+let startState: TodoListsType
+
+beforeEach(() => {
+    todolistID1 = v1()
+    todolistID2 = v1()
+    todolistID3 = v1()
+    todolistID4 = v1()
+
+    startState = [
+        {id: todolistID1, title: 'Affairs', filter: 'all', order: 0, addedDate: ''},
+        {id: todolistID2, title: 'Music', filter: 'all', order: 0, addedDate: ''},
+        {id: todolistID3, title: 'Movies', filter: 'all', order: 0, addedDate: ''},
+        {id: todolistID4, title: 'TDList', filter: 'all', order: 0, addedDate: ''},
+    ]
+})
 
 
 test('exact todolist should be removed', () => {
 
-    let todolistID1 = v1()
-    let todolistID2 = v1()
-    let todolistID3 = v1()
-    let todolistID4 = v1()
-
-    const startState: todoListsType = [
-        {todolistID: todolistID1, todoListTitle: 'Affairs', filter: 'all'},
-        {todolistID: todolistID2, todoListTitle: 'Music', filter: 'all'},
-        {todolistID: todolistID3, todoListTitle: 'Movies', filter: 'all'},
-        {todolistID: todolistID4, todoListTitle: 'TDList', filter: 'all'},
-    ]
-
-    const finalState = todolistsReducer(startState, removeTDlAC(todolistID1))
+    const finalState = todolistsReducer(startState, removeTDlAC(todolistID4))
 
     expect(finalState.length).toBe(3)
-    expect(finalState[0].todolistID).toBe(todolistID2)
+    expect(finalState[1].id).toBe(todolistID2)
 
 })
 
 test('exact todolist should be added', () => {
 
-    let todolistID1 = v1()
-    let todolistID2 = v1()
-    let todolistID3 = v1()
-    let todolistID4 = v1()
-
     let newTodoListTitle = 'New SOW'
-
-    const startState: todoListsType = [
-        {todolistID: todolistID1, todoListTitle: 'Affairs', filter: 'all'},
-        {todolistID: todolistID2, todoListTitle: 'Music', filter: 'all'},
-        {todolistID: todolistID3, todoListTitle: 'Movies', filter: 'all'},
-        {todolistID: todolistID4, todoListTitle: 'TDList', filter: 'all'},
-    ]
 
     const finalState = todolistsReducer(startState, addTDlAC(newTodoListTitle))
 
     expect(finalState.length).toBe(5)
-    expect(finalState[4].todoListTitle).toBe(newTodoListTitle)
+    expect(finalState[4].title).toBe(newTodoListTitle)
 })
 
 test('exact todolists title should be changed', () => {
 
-    let todolistID1 = v1()
-    let todolistID2 = v1()
-    let todolistID3 = v1()
-    let todolistID4 = v1()
+    const finalState = todolistsReducer(startState, changeTDlTitleAC(todolistID3, 'New SOW'))
 
-    let newTodoListTitle = 'New SOW'
-
-    const startState: todoListsType = [
-        {todolistID: todolistID1, todoListTitle: 'Affairs', filter: 'all'},
-        {todolistID: todolistID2, todoListTitle: 'Music', filter: 'all'},
-        {todolistID: todolistID3, todoListTitle: 'Movies', filter: 'all'},
-        {todolistID: todolistID4, todoListTitle: 'TDList', filter: 'all'},
-    ]
-
-    const finalState = todolistsReducer(startState, changeTDlTitleAC(todolistID3, newTodoListTitle))
-
-    expect(finalState[2].todoListTitle).toBe('New SOW')
-    expect(finalState[3].todoListTitle).toBe('TDList')
+    expect(finalState[2].title).toBe('New SOW')
+    expect(finalState[3].title).toBe('TDList')
 })
 
 test('exact todolists filter value should be changed', () => {
 
-    let todolistID1 = v1()
-    let todolistID2 = v1()
-    let todolistID3 = v1()
-    let todolistID4 = v1()
-
     let newFilterValue: FilterType = 'completed'
-
-    const startState: todoListsType = [
-        {todolistID: todolistID1, todoListTitle: 'Affairs', filter: 'all'},
-        {todolistID: todolistID2, todoListTitle: 'Music', filter: 'all'},
-        {todolistID: todolistID3, todoListTitle: 'Movies', filter: 'all'},
-        {todolistID: todolistID4, todoListTitle: 'TDList', filter: 'all'},
-    ]
 
     const finalState = todolistsReducer(startState, changeTDlFilterAC(newFilterValue, todolistID1))
 

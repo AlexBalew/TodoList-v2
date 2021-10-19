@@ -200,13 +200,15 @@ export const UpdateTask = () => {
             }}/></li>
             <li><input placeholder='Insert task priority here' value={priority} onChange={(e) => {
                 setPriority(+e.currentTarget.value)
-            }}/>task priority</li>
+            }}/>task priority
+            </li>
             <li><input placeholder='Insert task startDate here' value={startDate!} onChange={(e) => {
                 setStartDate(e.currentTarget.value)
             }}/></li>
             <li><input placeholder='Insert task status here' value={status} onChange={(e) => {
                 setStatus(+e.currentTarget.value)
-            }}/>task status</li>
+            }}/>task status
+            </li>
         </ul>
         <button onClick={UpdateTaskOnCLick}>Update exact task from exact TDList</button>
     </div>

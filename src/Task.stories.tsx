@@ -1,7 +1,8 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import {ComponentMeta, ComponentStory} from '@storybook/react';
 import {action} from "@storybook/addon-actions";
 import {Task} from "./Task";
+import {TaskPriorities, TaskStatuses} from "./api/Todolists.api";
 
 export default {
     title: 'TaskExample',
@@ -20,6 +21,10 @@ export const TaskExample = Template.bind({});
 
 TaskExample.args = {
     ...baseArgs,
-    task: {id: '48', taskName: 'Feed the cat', isDone: false},
+    task: {
+        id: '48', title: 'Feed the cat', status: TaskStatuses.InProgress,
+        addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+        priority: TaskPriorities.Hi, todoListId: 'TD1'
+    },
     todolistId: 'TD1'
 };
