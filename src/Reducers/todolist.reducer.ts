@@ -1,35 +1,34 @@
-import {FilterType, todoListsType} from "../App";
 import {v1} from "uuid";
+import {TodolistType} from "../api/Todolists.api";
 
-export let todolistID1 = v1()
-export let todolistID2 = v1()
-export let todolistID3 = v1()
-export let todolistID4 = v1()
 
-let initialState: todoListsType = [
-    {todolistID: todolistID1, todoListTitle: 'Affairs', filter: 'all'},
-    {todolistID: todolistID2, todoListTitle: 'Music', filter: 'all'},
-    {todolistID: todolistID3, todoListTitle: 'Movies', filter: 'all'},
-    {todolistID: todolistID4, todoListTitle: 'TDList', filter: 'all'},
-]
+let initialState: Array<TodolistDomainType> = []
 
-export const todolistsReducer = (state: todoListsType = initialState, action: ActionSType): todoListsType => {
+export type FilterType = 'all' | 'active' | 'completed'
+export type TodolistDomainType = TodolistType & {
+    filter: FilterType
+}
+
+export const todolistsReducer = (state: Array<TodolistDomainType> = initialState, action: ActionSType): Array<TodolistDomainType> => {
     switch (action.type) {
         case 'REMOVE_TODOLIST' : {
-            return state.filter(tl => tl.todolistID !== action.id)
+            return state.filter(tl => tl.id !== action.id)
         }
         case 'ADD_TODOLIST' : {
+            debugger
             return [...state, {
-                todolistID: action.todolistId,
-                todoListTitle: action.todoListTitle,
-                filter: 'all'
+                id: action.id,
+                title: action.title,
+                filter: 'all',
+                addedDate: '',
+                order: 0
             }]
         }
         case 'CHANGE_TDL_TITLE' : {
-            return state.map(tl => tl.todolistID === action.id ? {...tl, todoListTitle: action.title} : tl)
+            return state.map(tl => tl.id === action.id ? {...tl, title: action.title} : tl)
         }
         case 'CHANGE_TDL_FILTER' : {
-            return state.map(tl => tl.todolistID === action.tlID ? {...tl, filter: action.filter} : tl)
+            return state.map(tl => tl.id === action.id ? {...tl, filter: action.filter} : tl)
         }
         default:
             return state
@@ -52,11 +51,12 @@ export const removeTDlAC = (todolistID: string) => {
 
 export type addTDlType = ReturnType<typeof addTDlAC>
 
-export const addTDlAC = (todoListTitle: string) => {
+export const addTDlAC = (title: string) => {
+    debugger
     return {
         type: 'ADD_TODOLIST',
-        todoListTitle,
-        todolistId: v1()
+        id: v1(),
+        title
     } as const
 }
 
@@ -77,6 +77,9 @@ export const changeTDlFilterAC = (filter: FilterType, tlID: string) => {
     return {
         type: 'CHANGE_TDL_FILTER',
         filter,
-        tlID,
+        id: tlID,
     } as const
 }
+
+
+

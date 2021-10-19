@@ -1,7 +1,8 @@
 import {v1} from "uuid";
-import {stateType} from "../App";
+import {TasksStateType} from "../App";
 import {addTaskAC, changeTaskStatusAC, deleteTaskAC, onChangeTitleAC, tasksReducer} from "./tasks.reducer";
 import {addTDlAC, removeTDlAC} from "./todolist.reducer";
+import {TaskPriorities, TaskStatuses} from "../api/Todolists.api";
 
 
 test('exact task should be removed from exact array', () => {
@@ -13,32 +14,96 @@ test('exact task should be removed from exact array', () => {
 
     let taskID1 = v1()
 
-    const startState: stateType = {
+    const startState: TasksStateType = {
         [todolistID1]: [
-            {id: taskID1, taskName: 'sleep', isDone: true},
-            {id: v1(), taskName: 'drink', isDone: false},
-            {id: v1(), taskName: 'rave', isDone: false},
-            {id: v1(), taskName: 'repeat', isDone: true},
+            {
+                id: taskID1, title: 'sleep', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'drink', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'rave', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'repeat', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
         ],
         [todolistID2]: [
-            {id: v1(), taskName: 'Metallica', isDone: true},
-            {id: v1(), taskName: 'Neuro', isDone: false},
-            {id: v1(), taskName: 'Ghost', isDone: false},
-            {id: v1(), taskName: 'Liquid', isDone: true},
+            {
+                id: v1(), title: 'Metallica', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Neuro', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Ghost', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Liquid', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
         ],
         [todolistID3]: [
-            {id: v1(), taskName: 'Seven', isDone: true},
-            {id: v1(), taskName: 'Night', isDone: false},
-            {id: v1(), taskName: 'Family Guy', isDone: false},
-            {id: v1(), taskName: 'South Park', isDone: true}
+            {
+                id: v1(), title: 'Seven', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Night', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Family Guy', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'South Park', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            }
         ],
         [todolistID4]: [
-            {id: v1(), taskName: 'Train UseStyles', isDone: false},
-            {id: v1(), taskName: 'Set up a background', isDone: false},
-            {id: v1(), taskName: 'Create own style', isDone: false},
-            {id: v1(), taskName: 'Push it to GitHub', isDone: false}
+            {
+                id: v1(), title: 'Train UseStyles', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Set up a background', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Create own style', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Push it to GitHub', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            }
         ],
-}
+    }
 
     const finalState = tasksReducer(startState, deleteTaskAC(todolistID1, taskID1))
 
@@ -57,38 +122,102 @@ test('new task should be added to exact array', () => {
     let todolistID4 = v1()
 
 
-    const startState: stateType = {
+    const startState: TasksStateType = {
         [todolistID1]: [
-            {id: v1(), taskName: 'sleep', isDone: true},
-            {id: v1(), taskName: 'drink', isDone: false},
-            {id: v1(), taskName: 'rave', isDone: false},
-            {id: v1(), taskName: 'repeat', isDone: true},
+            {
+                id: v1(), title: 'sleep', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'drink', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'rave', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'repeat', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
         ],
         [todolistID2]: [
-            {id: v1(), taskName: 'Metallica', isDone: true},
-            {id: v1(), taskName: 'Neuro', isDone: false},
-            {id: v1(), taskName: 'Ghost', isDone: false},
-            {id: v1(), taskName: 'Liquid', isDone: true},
+            {
+                id: v1(), title: 'Metallica', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Neuro', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Ghost', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Liquid', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
         ],
         [todolistID3]: [
-            {id: v1(), taskName: 'Seven', isDone: true},
-            {id: v1(), taskName: 'Night', isDone: false},
-            {id: v1(), taskName: 'Family Guy', isDone: false},
-            {id: v1(), taskName: 'South Park', isDone: true}
+            {
+                id: v1(), title: 'Seven', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Night', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Family Guy', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'South Park', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            }
         ],
         [todolistID4]: [
-            {id: v1(), taskName: 'Train UseStyles', isDone: false},
-            {id: v1(), taskName: 'Set up a background', isDone: false},
-            {id: v1(), taskName: 'Create own style', isDone: false},
-            {id: v1(), taskName: 'Push it to GitHub', isDone: false}
+            {
+                id: v1(), title: 'Train UseStyles', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Set up a background', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Create own style', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Push it to GitHub', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            }
         ],
     }
 
     const finalState = tasksReducer(startState, addTaskAC(todolistID2, 'Дайте танк!'))
 
     expect(finalState[todolistID2].length).toBe(5)
-    expect(finalState[todolistID2][0].taskName).toBe('Дайте танк!')
-    expect(finalState[todolistID2][2].taskName).toBe('Neuro')
+    expect(finalState[todolistID2][0].title).toBe('Дайте танк!')
+    expect(finalState[todolistID2][2].title).toBe('Neuro')
     expect(finalState[todolistID4].length).toBe(4)
 
 })
@@ -102,37 +231,101 @@ test('task title should be changed in exact array', () => {
 
     let newTaskID = v1()
 
-    const startState: stateType = {
+    const startState: TasksStateType = {
         [todolistID1]: [
-            {id: v1(), taskName: 'sleep', isDone: true},
-            {id: v1(), taskName: 'drink', isDone: false},
-            {id: v1(), taskName: 'rave', isDone: false},
-            {id: v1(), taskName: 'repeat', isDone: true},
+            {
+                id: v1(), title: 'sleep', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'drink', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'rave', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'repeat', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
         ],
         [todolistID2]: [
-            {id: v1(), taskName: 'Metallica', isDone: true},
-            {id: v1(), taskName: 'Neuro', isDone: false},
-            {id: v1(), taskName: 'Ghost', isDone: false},
-            {id: v1(), taskName: 'Liquid', isDone: true},
+            {
+                id: v1(), title: 'Metallica', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Neuro', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Ghost', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Liquid', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
         ],
         [todolistID3]: [
-            {id: v1(), taskName: 'Seven', isDone: true},
-            {id: newTaskID, taskName: 'Night', isDone: false},
-            {id: v1(), taskName: 'Family Guy', isDone: false},
-            {id: v1(), taskName: 'South Park', isDone: true}
+            {
+                id: v1(), title: 'Seven', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: newTaskID, title: 'Night', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Family Guy', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'South Park', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            }
         ],
         [todolistID4]: [
-            {id: v1(), taskName: 'Train UseStyles', isDone: false},
-            {id: v1(), taskName: 'Set up a background', isDone: false},
-            {id: v1(), taskName: 'Create own style', isDone: false},
-            {id: v1(), taskName: 'Push it to GitHub', isDone: false}
+            {
+                id: v1(), title: 'Train UseStyles', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Set up a background', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Create own style', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Push it to GitHub', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            }
         ],
     }
 
     const finalState = tasksReducer(startState, onChangeTitleAC(todolistID3, newTaskID, 'It'))
 
-    expect(finalState[todolistID3][1].taskName).toBe('It')
-    expect(finalState[todolistID3][2].taskName).toBe('Family Guy')
+    expect(finalState[todolistID3][1].title).toBe('It')
+    expect(finalState[todolistID3][2].title).toBe('Family Guy')
 })
 
 test('task status should be changed in exact array', () => {
@@ -144,39 +337,103 @@ test('task status should be changed in exact array', () => {
 
     let newTaskID = v1()
 
-    const startState: stateType = {
+    const startState: TasksStateType = {
         [todolistID1]: [
-            {id: v1(), taskName: 'sleep', isDone: true},
-            {id: v1(), taskName: 'drink', isDone: false},
-            {id: v1(), taskName: 'rave', isDone: false},
-            {id: v1(), taskName: 'repeat', isDone: true},
+            {
+                id: v1(), title: 'sleep', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'drink', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'rave', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'repeat', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
         ],
         [todolistID2]: [
-            {id: v1(), taskName: 'Metallica', isDone: true},
-            {id: v1(), taskName: 'Neuro', isDone: false},
-            {id: v1(), taskName: 'Ghost', isDone: false},
-            {id: v1(), taskName: 'Liquid', isDone: true},
+            {
+                id: v1(), title: 'Metallica', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Neuro', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Ghost', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Liquid', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
         ],
         [todolistID3]: [
-            {id: v1(), taskName: 'Seven', isDone: true},
-            {id: newTaskID, taskName: 'Night', isDone: false},
-            {id: v1(), taskName: 'Family Guy', isDone: false},
-            {id: v1(), taskName: 'South Park', isDone: true}
+            {
+                id: v1(), title: 'Seven', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: newTaskID, title: 'Night', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Family Guy', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'South Park', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            }
         ],
         [todolistID4]: [
-            {id: v1(), taskName: 'Train UseStyles', isDone: false},
-            {id: v1(), taskName: 'Set up a background', isDone: false},
-            {id: v1(), taskName: 'Create own style', isDone: false},
-            {id: v1(), taskName: 'Push it to GitHub', isDone: false}
+            {
+                id: v1(), title: 'Train UseStyles', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Set up a background', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Create own style', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Push it to GitHub', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            }
         ],
     }
 
-    const finalState = tasksReducer(startState, changeTaskStatusAC(todolistID3, newTaskID, true))
+    const finalState = tasksReducer(startState, changeTaskStatusAC(todolistID3, newTaskID, TaskStatuses.Completed))
 
-    expect(finalState[todolistID3][1].isDone).toBe(true)
-    expect(finalState[todolistID3][2].isDone).toBe(false)
-    expect(finalState[todolistID3][0].isDone).toBe(true)
-    expect(finalState[todolistID3][3].isDone).toBe(true)
+    expect(finalState[todolistID3][1].status).toBe(TaskStatuses.New)
+    expect(finalState[todolistID3][2].status).toBe(TaskStatuses.New)
+    expect(finalState[todolistID3][0].status).toBe(TaskStatuses.Completed)
+    expect(finalState[todolistID3][3].status).toBe(TaskStatuses.Completed)
 })
 
 test('new array should be added when new todolist is added', () => {
@@ -187,30 +444,94 @@ test('new array should be added when new todolist is added', () => {
 
     let newTaskID = v1()
 
-    const startState: stateType = {
+    const startState: TasksStateType = {
         [todolistID1]: [
-            {id: v1(), taskName: 'sleep', isDone: true},
-            {id: v1(), taskName: 'drink', isDone: false},
-            {id: v1(), taskName: 'rave', isDone: false},
-            {id: v1(), taskName: 'repeat', isDone: true},
+            {
+                id: v1(), title: 'sleep', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'drink', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'rave', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'repeat', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
         ],
         [todolistID2]: [
-            {id: v1(), taskName: 'Metallica', isDone: true},
-            {id: v1(), taskName: 'Neuro', isDone: false},
-            {id: v1(), taskName: 'Ghost', isDone: false},
-            {id: v1(), taskName: 'Liquid', isDone: true},
+            {
+                id: v1(), title: 'Metallica', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Neuro', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Ghost', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Liquid', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
         ],
         [todolistID3]: [
-            {id: v1(), taskName: 'Seven', isDone: true},
-            {id: newTaskID, taskName: 'Night', isDone: false},
-            {id: v1(), taskName: 'Family Guy', isDone: false},
-            {id: v1(), taskName: 'South Park', isDone: true}
+            {
+                id: v1(), title: 'Seven', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: newTaskID, title: 'Night', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Family Guy', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'South Park', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            }
         ],
         [todolistID4]: [
-            {id: v1(), taskName: 'Train UseStyles', isDone: false},
-            {id: v1(), taskName: 'Set up a background', isDone: false},
-            {id: v1(), taskName: 'Create own style', isDone: false},
-            {id: v1(), taskName: 'Push it to GitHub', isDone: false}
+            {
+                id: v1(), title: 'Train UseStyles', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Set up a background', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Create own style', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Push it to GitHub', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            }
         ],
     }
 
@@ -221,7 +542,7 @@ test('new array should be added when new todolist is added', () => {
 
     const keys = Object.keys(endState);
     const newKey = keys.find(k => k != todolistID1 &&
-        k != todolistID2 && k != todolistID3 && k != todolistID4 );
+        k != todolistID2 && k != todolistID3 && k != todolistID4);
     if (!newKey) {
         throw Error("new key should be added")
     }
@@ -238,30 +559,94 @@ test('property with todolistId should be deleted', () => {
 
     let newTaskID = v1()
 
-    const startState: stateType = {
+    const startState: TasksStateType = {
         [todolistID1]: [
-            {id: v1(), taskName: 'sleep', isDone: true},
-            {id: v1(), taskName: 'drink', isDone: false},
-            {id: v1(), taskName: 'rave', isDone: false},
-            {id: v1(), taskName: 'repeat', isDone: true},
+            {
+                id: v1(), title: 'sleep', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'drink', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'rave', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'repeat', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
         ],
         [todolistID2]: [
-            {id: v1(), taskName: 'Metallica', isDone: true},
-            {id: v1(), taskName: 'Neuro', isDone: false},
-            {id: v1(), taskName: 'Ghost', isDone: false},
-            {id: v1(), taskName: 'Liquid', isDone: true},
+            {
+                id: v1(), title: 'Metallica', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Neuro', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Ghost', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Liquid', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
         ],
         [todolistID3]: [
-            {id: v1(), taskName: 'Seven', isDone: true},
-            {id: newTaskID, taskName: 'Night', isDone: false},
-            {id: v1(), taskName: 'Family Guy', isDone: false},
-            {id: v1(), taskName: 'South Park', isDone: true}
+            {
+                id: v1(), title: 'Seven', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: newTaskID, title: 'Night', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Family Guy', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'South Park', status: TaskStatuses.Completed,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            }
         ],
         [todolistID4]: [
-            {id: v1(), taskName: 'Train UseStyles', isDone: false},
-            {id: v1(), taskName: 'Set up a background', isDone: false},
-            {id: v1(), taskName: 'Create own style', isDone: false},
-            {id: v1(), taskName: 'Push it to GitHub', isDone: false}
+            {
+                id: v1(), title: 'Train UseStyles', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Set up a background', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Create own style', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            },
+            {
+                id: v1(), title: 'Push it to GitHub', status: TaskStatuses.New,
+                addedDate: '01-01-2021', deadline: '', description: 'daily routine', startDate: '', order: 0,
+                priority: TaskPriorities.Hi, todoListId: 'TD1'
+            }
         ],
     }
 

@@ -2,7 +2,7 @@ import {combineReducers, createStore} from "redux";
 import {todolistsReducer} from "../Reducers/todolist.reducer";
 import {tasksReducer} from "../Reducers/tasks.reducer";
 
-export type mainReducerType = ReturnType<typeof mainReducer>
+export type MainReducerType = ReturnType<typeof mainReducer>
 
 let mainReducer = combineReducers({
     todoLists: todolistsReducer,

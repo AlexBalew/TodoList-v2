@@ -1,25 +1,20 @@
 import React, {useCallback} from "react";
-import {FilterType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {Task} from "./Task";
+import {FilterType} from "./Reducers/todolist.reducer";
+import {ResponseTaskEntityType, TaskStatuses} from "./api/Todolists.api";
 
-
-export type TaskType = {
-    id: string
-    taskName: string
-    isDone: boolean
-}
 
 export type ToDoListPropsType = {
-    tasks: Array<TaskType>
+    tasks: Array<ResponseTaskEntityType>
     deleteTask: (tID: string, tlID: string) => void
     changeFilter: (filter: FilterType, tlID: string) => void
     addTask: (newTaskTitle: string, tlID: string) => void
     filter: FilterType
-    changeTaskStatus: (tID: string, isDone: boolean, tlID: string) => void
+    changeTaskStatus: (tlID: string, tID: string, status: TaskStatuses) => void
     title: string
     id: string
     removeTDFunc: (tlID: string) => void
@@ -57,10 +52,10 @@ export const OwnTodoList = React.memo((props: ToDoListPropsType) => {
 
     let tasksForTDList = props.tasks
     if (props.filter === 'active') {
-        tasksForTDList = props.tasks.filter(t => !t.isDone)
+        tasksForTDList = props.tasks.filter(t => t.status === TaskStatuses.New)
     }
     if (props.filter === 'completed') {
-        tasksForTDList = props.tasks.filter(t => t.isDone)
+        tasksForTDList = props.tasks.filter(t => t.status === TaskStatuses.Completed)
     }
 
     return (
@@ -84,15 +79,15 @@ export const OwnTodoList = React.memo((props: ToDoListPropsType) => {
                                                                  todolistId={props.id} />)
                     }
                 </ul>
-                <Button color={'default'}
+                <Button color={props.filter === 'all' ? 'secondary' : 'primary'}
                         variant={props.filter === 'all' ? 'outlined' : 'text'}
                         onClick={allFilter}
                         size={"small"}>All</Button>
-                <Button color={'default'}
+                <Button color={props.filter === 'active' ? 'secondary' : 'primary'}
                         variant={props.filter === 'active' ? 'outlined' : 'text'}
                         onClick={activeFilter}
                         size={"small"}>Active</Button>
-                <Button color={'default'}
+                <Button color={props.filter === 'completed' ? 'secondary' : 'primary'}
                         variant={props.filter === 'completed' ? 'outlined' : 'text'}
                         onClick={completedFilter}
                         size={"small"}>Completed</Button>
