@@ -174,7 +174,7 @@ export const UpdateTask = () => {
 
     const UpdateTaskOnCLick = () => {
         tasksAPI.updateTask(todolistId, taskID,
-            {title, description, deadline, priority, startDate, status})
+            {title, description, status, priority, startDate, deadline})
             .then((res) => {
                 setState(res.data)
             })

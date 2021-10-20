@@ -6,6 +6,7 @@ import {
     changeTDlTitleAC,
     FilterType,
     removeTDlAC,
+    setTodolistsAC,
     todolistsReducer
 } from "./todolist.reducer";
 
@@ -25,10 +26,9 @@ beforeEach(() => {
         {id: todolistID1, title: 'Affairs', filter: 'all', order: 0, addedDate: ''},
         {id: todolistID2, title: 'Music', filter: 'all', order: 0, addedDate: ''},
         {id: todolistID3, title: 'Movies', filter: 'all', order: 0, addedDate: ''},
-        {id: todolistID4, title: 'TDList', filter: 'all', order: 0, addedDate: ''},
+        {id: todolistID4, title: 'TDList', filter: 'active', order: 0, addedDate: ''},
     ]
 })
-
 
 test('exact todolist should be removed', () => {
 
@@ -36,7 +36,6 @@ test('exact todolist should be removed', () => {
 
     expect(finalState.length).toBe(3)
     expect(finalState[1].id).toBe(todolistID2)
-
 })
 
 test('exact todolist should be added', () => {
@@ -66,4 +65,15 @@ test('exact todolists filter value should be changed', () => {
     expect(finalState[2].filter).toBe('all')
     expect(finalState[0].filter).toBe('completed')
     expect(finalState[1].filter).toBe('all')
+})
+
+test('todolists should be set', () => {
+
+    const finalState = todolistsReducer([], setTodolistsAC(startState))
+
+    expect(finalState.length).toBe(4)
+    expect(finalState[1].filter).toBe('all')
+    expect(finalState[0].title).toBe('Affairs')
+    expect(finalState[2].id).toBe(todolistID3)
+    expect(finalState[3].filter).toBe('all')
 })

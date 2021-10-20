@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {OwnTodoList} from "./OwnTodoList";
 import {AddItemForm} from "./AddItemForm";
@@ -11,7 +11,7 @@ import {addTaskAC, changeTaskStatusAC, deleteTaskAC, onChangeTitleAC} from "./Re
 import {
     addTDlAC,
     changeTDlFilterAC,
-    changeTDlTitleAC, FilterType,
+    changeTDlTitleAC, FilterType, getTodolistsTC,
     removeTDlAC,
     TodolistDomainType
 } from "./Reducers/todolist.reducer";
@@ -41,6 +41,9 @@ function App() {
     let todolistsFromState = useSelector<MainReducerType, TodoListsType>(state => state.todoLists)
     let tasksFromState = useSelector<MainReducerType, TasksStateType>(state => state.tasks)
 
+    useEffect(() => {
+        dispatch(getTodolistsTC())
+    }, [])
 
     const addTask = useCallback((tlID: string, newTaskTitle: string) => {
         dispatch(addTaskAC(tlID, newTaskTitle))
@@ -98,12 +101,12 @@ function App() {
                 <Grid container spacing={4}>
                     {todolistsFromState.map(tl => {
                             let filteredTasks = tasksFromState[tl.id]
-                        return <Grid item>
+                            return <Grid item>
                                 <Paper style={{padding: '10px'}}>
                                     <OwnTodoList
                                         key={tl.id}
                                         id={tl.id}
-                                        title={tl.id}
+                                        title={tl.title}
                                         tasks={filteredTasks}
                                         deleteTask={deleteTask}
                                         changeFilter={changeFilter}
