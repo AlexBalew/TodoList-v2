@@ -22,4 +22,4 @@ export const AppExample = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 AppExample.args = {
 
-};
+    };

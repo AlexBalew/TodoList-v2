@@ -13,8 +13,8 @@ let mainReducer = combineReducers({
 
 const InitialStoryBookState: MainReducerType = {
     todoLists: [
-        {id: 'Todolist1', title: '1 one', filter: 'all', addedDate: '', order: 0},
-        {id: 'Todolist2', title: '2 one', filter: 'all', addedDate: '', order: 0},
+        {id: 'Todolist1Id', title: '1 one', filter: 'all', addedDate: '', order: 0},
+        {id: 'Todolist2Id', title: '2 one', filter: 'all', addedDate: '', order: 0},
     ],
     tasks: {
         ['Todolist1Id'] : [
