@@ -12,7 +12,7 @@ import {getTasksTC} from "./Reducers/tasks.reducer";
 
 export type ToDoListPropsType = {
     tasks: Array<ResponseTaskEntityType>
-    deleteTask: (tID: string, tlID: string) => void
+    deleteTask: (todolistId: string, taskId: string) => void
     changeFilter: (filter: FilterType, tlID: string) => void
     addTask: (newTaskTitle: string, tlID: string) => void
     filter: FilterType
