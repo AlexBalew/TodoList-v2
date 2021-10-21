@@ -2,14 +2,14 @@ import React, {ChangeEvent, useCallback} from "react";
 import {Checkbox, IconButton} from "@material-ui/core";
 import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@material-ui/icons";
-import {ResponseTaskEntityType, TaskStatuses} from "./api/Todolists.api";
+import {ResponseTaskType, TaskStatuses} from "./api/Todolists.api";
 
 
 type TaskPropsType = {
     changeTaskStatus: (tlID: string, tID: string, status: TaskStatuses) => void
     onChangeTitle: (tID: string, newValue: string, tlID: string) => void
     deleteTask: (tlID: string, tID: string) => void
-    task: ResponseTaskEntityType
+    task: ResponseTaskType
     todolistId: string
 }
 export const Task = React.memo((props: TaskPropsType) => {

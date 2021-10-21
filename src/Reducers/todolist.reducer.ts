@@ -98,6 +98,14 @@ export const getTodolistsTC = () => (dispatch: Dispatch) => {
         )
 }
 
+export const removeTodolistsTC = (todolistId: string) => (dispatch: Dispatch) => {
+    todolistsAPI.deleteTDLists(todolistId)
+        .then(res => {
+                dispatch(removeTDlAC(todolistId))
+            }
+        )
+}
+
 
 
 

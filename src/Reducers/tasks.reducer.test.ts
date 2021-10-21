@@ -102,7 +102,7 @@ beforeEach(() => {
                 priority: TaskPriorities.Hi, todoListId: 'TD1'
             }
         ],
-        [todolistID5] : []
+        [todolistID5]: []
     }
 })
 
@@ -119,12 +119,27 @@ test('exact task should be removed from exact array', () => {
 
 test('new task should be added to exact array', () => {
 
-    const finalState = tasksReducer(startState, addTaskAC(todolistID2, 'Дайте танк!'))
+    const action = addTaskAC({
+        todoListId: todolistID2,
+        title: 'Дайте танк!',
+        status: TaskStatuses.New,
+        addedDate: '',
+        deadline: '',
+        description: '',
+        order: 0,
+        priority: 0,
+        startDate: '',
+        id: '234467'
+    })
+
+    const finalState = tasksReducer(startState, addTaskAC(action))
 
     expect(finalState[todolistID2].length).toBe(5)
     expect(finalState[todolistID2][0].title).toBe('Дайте танк!')
     expect(finalState[todolistID2][2].title).toBe('Neuro')
     expect(finalState[todolistID4].length).toBe(4)
+    expect(finalState[todolistID2][4].title).toBe('Liquid')
+
 
 })
 
@@ -198,11 +213,33 @@ test('new empty arrays of tasks should be added when todolists were set', () => 
 test('new arrays of tasks should be added to state when todolists were set', () => {
 
     const action = setTasksAC(todolistID5, [
-        {id: '23', title: '11122', order: 0, addedDate: '', description: '', status: 0, priority: 0, startDate: '', deadline: '', todoListId: todolistID3},
-        {id: '32', title: '11133', order: 0, addedDate: '', description: '', status: 0, priority: 0, startDate: '', deadline: '', todoListId: todolistID3},
+        {
+            id: '23',
+            title: '11122',
+            order: 0,
+            addedDate: '',
+            description: '',
+            status: 0,
+            priority: 0,
+            startDate: '',
+            deadline: '',
+            todoListId: todolistID3
+        },
+        {
+            id: '32',
+            title: '11133',
+            order: 0,
+            addedDate: '',
+            description: '',
+            status: 0,
+            priority: 0,
+            startDate: '',
+            deadline: '',
+            todoListId: todolistID3
+        },
     ])
 
-    const endState = tasksReducer({[todolistID5] : []}, action)
+    const endState = tasksReducer({[todolistID5]: []}, action)
 
     expect(endState[todolistID5].length).toBe(2);
     expect(endState[todolistID5][0].id).toBe('23');
