@@ -7,7 +7,12 @@ import {Button, Container, Grid, IconButton, makeStyles, Paper, Toolbar, Typogra
 import {Menu} from '@material-ui/icons';
 import {useDispatch, useSelector} from "react-redux";
 import {MainReducerType} from "./store/store";
-import {addTaskTC, changeTaskStatusAC, deleteTaskTC, onChangeTitleAC} from "./Reducers/tasks.reducer";
+import {
+    addTaskTC,
+    changeTaskStatusTC,
+    deleteTaskTC,
+    onChangeTitleAC
+} from "./Reducers/tasks.reducer";
 import {
     addTDlAC,
     changeTDlFilterAC,
@@ -50,7 +55,7 @@ function App() {
     }, [dispatch])
 
     const changeTaskStatus = useCallback((tlID: string, tID: string, status: TaskStatuses) => {
-        dispatch(changeTaskStatusAC(tlID, tID, status))
+        dispatch(changeTaskStatusTC(tlID, tID, status))
     }, [dispatch])
 
     const deleteTask = useCallback((todolistId: string, taskId: string) => {
