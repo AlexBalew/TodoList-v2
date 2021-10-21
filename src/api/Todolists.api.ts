@@ -61,7 +61,7 @@ export enum TaskPriorities {
     Later
 }
 
-export type ResponseTaskEntityType = {
+export type ResponseTaskType = {
     description: string
     title: string
     status: TaskStatuses
@@ -75,7 +75,7 @@ export type ResponseTaskEntityType = {
 }
 
 export type ResponseTasksType = {
-    items: Array<ResponseTaskEntityType>
+    items: Array<ResponseTaskType>
     totalCount: number
     error: string | null
 }
@@ -109,7 +109,7 @@ export const tasksAPI = {
         return instance.get<ResponseTasksType>(`todo-lists/${todolistId}/tasks`)
     },
     createTask(todolistId: string, title: string) {
-        return instance.post<ResponseTasksType>(`todo-lists/${todolistId}/tasks`, {title})
+        return instance.post<ResponseType<{ item: ResponseTaskType }>>(`todo-lists/${todolistId}/tasks`, {title})
     },
     deleteTask(todolistId: string, taskId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)

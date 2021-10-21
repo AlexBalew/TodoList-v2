@@ -7,18 +7,18 @@ import {Button, Container, Grid, IconButton, makeStyles, Paper, Toolbar, Typogra
 import {Menu} from '@material-ui/icons';
 import {useDispatch, useSelector} from "react-redux";
 import {MainReducerType} from "./store/store";
-import {addTaskAC, changeTaskStatusAC, deleteTaskAC, onChangeTitleAC} from "./Reducers/tasks.reducer";
+import {addTaskTC, changeTaskStatusAC, deleteTaskTC, onChangeTitleAC} from "./Reducers/tasks.reducer";
 import {
     addTDlAC,
     changeTDlFilterAC,
     changeTDlTitleAC, FilterType, getTodolistsTC,
-    removeTDlAC,
+    removeTodolistsTC,
     TodolistDomainType
 } from "./Reducers/todolist.reducer";
-import {ResponseTaskEntityType, TaskStatuses} from "./api/Todolists.api";
+import {ResponseTaskType, TaskStatuses} from "./api/Todolists.api";
 
 export type TasksStateType = {
-    [key: string]: Array<ResponseTaskEntityType>
+    [key: string]: Array<ResponseTaskType>
 }
 
 export type TodoListsType = Array<TodolistDomainType>
@@ -46,15 +46,15 @@ function App() {
     }, [])
 
     const addTask = useCallback((tlID: string, newTaskTitle: string) => {
-        dispatch(addTaskAC(tlID, newTaskTitle))
+        dispatch(addTaskTC(tlID, newTaskTitle))
     }, [dispatch])
 
     const changeTaskStatus = useCallback((tlID: string, tID: string, status: TaskStatuses) => {
         dispatch(changeTaskStatusAC(tlID, tID, status))
     }, [dispatch])
 
-    const deleteTask = useCallback((tID: string, tlID: string) => {
-        dispatch(deleteTaskAC(tlID, tID))
+    const deleteTask = useCallback((todolistId: string, taskId: string) => {
+        dispatch(deleteTaskTC(todolistId, taskId))
     }, [dispatch])
 
     const onChangeTaskTitle = useCallback((tlID: string, tID: string, newValue: string) => {
@@ -66,7 +66,7 @@ function App() {
     }, [dispatch])
 
     const removeTDFunc = useCallback((tlID: string) => {
-        dispatch(removeTDlAC(tlID))
+        dispatch(removeTodolistsTC(tlID))
     }, [dispatch])
 
     const addTDList = useCallback((title: string) => {
