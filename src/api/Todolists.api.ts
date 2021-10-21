@@ -83,7 +83,7 @@ export type ResponseTasksType = {
 export type UpdateModelType = {
     title: string
     description: string | null
-    status: number
+    status: TaskStatuses
     priority: number
     startDate: string | null
     deadline: string | null

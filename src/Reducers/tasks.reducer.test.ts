@@ -119,7 +119,7 @@ test('exact task should be removed from exact array', () => {
 
 test('new task should be added to exact array', () => {
 
-    const action = addTaskAC({
+    const action = ({
         todoListId: todolistID2,
         title: 'Дайте танк!',
         status: TaskStatuses.New,
