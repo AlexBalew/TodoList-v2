@@ -42,7 +42,7 @@ test('exact todolist should be added', () => {
 
     let newTodoListTitle = 'New SOW'
 
-    const finalState = todolistsReducer(startState, addTDlAC(newTodoListTitle))
+    const finalState = todolistsReducer(startState, addTDlAC({id: '2', title: newTodoListTitle, order: 0, addedDate: ''}))
 
     expect(finalState.length).toBe(5)
     expect(finalState[4].title).toBe(newTodoListTitle)

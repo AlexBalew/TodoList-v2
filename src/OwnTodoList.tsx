@@ -20,7 +20,7 @@ export type ToDoListPropsType = {
     title: string
     id: string
     removeTDFunc: (tlID: string) => void
-    onChangeTitle: (tID: string, newValue: string, tlID: string) => void
+    onChangeTaskTitle: (tlID: string, tID: string, newTitle: string) => void
     changeTDListTitleAPP: (newTitle: string, tlID: string) => void
 }
 
@@ -83,7 +83,7 @@ export const OwnTodoList = React.memo((props: ToDoListPropsType) => {
                                                                  task={t}
                                                                  deleteTask={props.deleteTask}
                                                                  changeTaskStatus={props.changeTaskStatus}
-                                                                 onChangeTitle={props.onChangeTitle}
+                                                                 onChangeTaskTitle={props.onChangeTaskTitle}
                                                                  todolistId={props.id} />)
                     }
                 </ul>

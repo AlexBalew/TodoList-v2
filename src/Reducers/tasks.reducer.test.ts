@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {TasksStateType} from "../App";
-import {addTaskAC, changeTaskStatusAC, deleteTaskAC, onChangeTitleAC, setTasksAC, tasksReducer} from "./tasks.reducer";
+import {addTaskAC, changeTaskStatusAC, deleteTaskAC, onChangeTaskTitleAC, setTasksAC, tasksReducer} from "./tasks.reducer";
 import {addTDlAC, removeTDlAC, setTodolistsAC} from "./todolist.reducer";
 import {TaskPriorities, TaskStatuses} from "../api/Todolists.api";
 
@@ -145,7 +145,7 @@ test('new task should be added to exact array', () => {
 
 test('task title should be changed in exact array', () => {
 
-    const finalState = tasksReducer(startState, onChangeTitleAC(todolistID3, taskID1, 'It'))
+    const finalState = tasksReducer(startState, onChangeTaskTitleAC(todolistID3, taskID1, 'It'))
 
     expect(finalState[todolistID3][1].title).toBe('It')
     expect(finalState[todolistID3][2].title).toBe('Family Guy')
@@ -165,7 +165,7 @@ test('task status should be changed in exact array', () => {
 
 test('new array should be added when new todolist is added', () => {
 
-    const action = addTDlAC("new affairs");
+    const action = addTDlAC({id: '1', title: 'New affairs', addedDate: '', order: 0});
 
     const endState = tasksReducer(startState, action)
 
@@ -177,7 +177,7 @@ test('new array should be added when new todolist is added', () => {
         throw Error("new key should be added")
     }
 
-    expect(keys.length).toBe(5);
+    expect(keys.length).toBe(6);
     expect(endState[newKey]).toEqual([]);
 });
 
@@ -190,7 +190,7 @@ test('property with todolistId should be deleted', () => {
 
     const keys = Object.keys(endState);
 
-    expect(keys.length).toBe(3);
+    expect(keys.length).toBe(4);
     expect(endState[todolistID3]).not.toBeDefined();
 });
 

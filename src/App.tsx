@@ -9,14 +9,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {MainReducerType} from "./store/store";
 import {
     addTaskTC,
-    changeTaskStatusTC,
+    changeTaskStatusTC, changeTaskTitleTC,
     deleteTaskTC,
-    onChangeTitleAC
 } from "./Reducers/tasks.reducer";
 import {
-    addTDlAC,
+    addTodolistTC,
     changeTDlFilterAC,
-    changeTDlTitleAC, FilterType, getTodolistsTC,
+    changeTodolistTitleTC, FilterType, getTodolistsTC,
     removeTodolistsTC,
     TodolistDomainType
 } from "./Reducers/todolist.reducer";
@@ -62,8 +61,8 @@ function App() {
         dispatch(deleteTaskTC(todolistId, taskId))
     }, [dispatch])
 
-    const onChangeTaskTitle = useCallback((tlID: string, tID: string, newValue: string) => {
-        dispatch(onChangeTitleAC(tlID, tID, newValue))
+    const onChangeTaskTitle = useCallback((tlID: string, tID: string, newTitle: string) => {
+        dispatch(changeTaskTitleTC(tlID, tID, newTitle))
     }, [dispatch])
 
     const changeFilter = useCallback((filter: FilterType, tlID: string) => {
@@ -75,11 +74,11 @@ function App() {
     }, [dispatch])
 
     const addTDList = useCallback((title: string) => {
-        dispatch(addTDlAC(title))
+        dispatch(addTodolistTC(title))
     }, [dispatch])
 
     const changeTDListTitleAPP = useCallback((tlID: string, newTitle: string) => {
-        dispatch(changeTDlTitleAC(tlID, newTitle))
+        dispatch(changeTodolistTitleTC(tlID, newTitle))
     }, [dispatch])
 
     const classes = useStyles();
@@ -119,7 +118,7 @@ function App() {
                                         filter={tl.filter}
                                         changeTaskStatus={changeTaskStatus}
                                         removeTDFunc={removeTDFunc}
-                                        onChangeTitle={onChangeTaskTitle}
+                                        onChangeTaskTitle={onChangeTaskTitle}
                                         changeTDListTitleAPP={changeTDListTitleAPP}
                                     />
                                 </Paper>
