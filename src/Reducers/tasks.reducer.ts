@@ -3,6 +3,7 @@ import {addTDlType, RemoveTDlType, setTodolistsACType} from "./todolist.reducer"
 import {ResponseTaskType, tasksAPI, TaskStatuses} from "../api/Todolists.api";
 import {Dispatch} from "redux";
 import {MainReducerType} from "../store/store";
+import {setErrorAC} from "./app-reducer";
 
 
 let initialState: TasksStateType = {}
@@ -143,20 +144,28 @@ export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: D
 export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
     tasksAPI.createTask(todolistId, title)
         .then(res => {
-                const task = res.data.data.item
-                const action = addTaskAC(task)
-                dispatch(action)
+                if (res.data.resultCode === 0) {
+                    const task = res.data.data.item
+                    const action = addTaskAC(task)
+                    dispatch(action)
+                } else {
+                    if (res.data.messages.length) {
+                        dispatch(setErrorAC(res.data.messages[0]))
+                    } else {
+                        dispatch(setErrorAC('some error has occurred'))
+                    }
+                }
             }
         )
 }
 
 export const changeTaskStatusTC = (todolistId: string, taskId: string, status: TaskStatuses) => (dispatch: Dispatch, getState: () => MainReducerType) => {
 
-   /* const allTasksFromState = getState().tasks; //подробная запись
-    const tasksForCurrentTodolist = allTasksFromState[todolistId]
-    const task = tasksForCurrentTodolist.find(t => {
-        return t.id === taskId
-    })*/
+    /* const allTasksFromState = getState().tasks; //подробная запись
+     const tasksForCurrentTodolist = allTasksFromState[todolistId]
+     const task = tasksForCurrentTodolist.find(t => {
+         return t.id === taskId
+     })*/
 
     const task = getState().tasks[todolistId].find(t => t.id === taskId)
 
