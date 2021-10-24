@@ -3,7 +3,7 @@ import {MainReducerType} from "../../store/store";
 import {combineReducers, createStore} from "redux";
 import {todolistsReducer} from "../../Reducers/todolist.reducer";
 import {tasksReducer} from "../../Reducers/tasks.reducer";
-import { v1 } from "uuid";
+import {v1} from "uuid";
 import {TaskStatuses} from "../../api/Todolists.api";
 
 let mainReducer = combineReducers({
@@ -17,19 +17,31 @@ const InitialStoryBookState: MainReducerType = {
         {id: 'Todolist2Id', title: '2 one', filter: 'all', addedDate: '', order: 0},
     ],
     tasks: {
-        ['Todolist1Id'] : [
-            {id: v1(), title: '1 task', description: '', status: TaskStatuses.New, priority: 0, startDate: '',
-                deadline: '', todoListId: 'Todolist1Id', order: 0, addedDate: ''},
-            {id: v1(), title: '2 task', description: '', status: TaskStatuses.New, priority: 0, startDate: '',
-                deadline: '', todoListId: 'Todolist1Id', order: 0, addedDate: ''},
+        ['Todolist1Id']: [
+            {
+                id: v1(), title: '1 task', description: '', status: TaskStatuses.New, priority: 0, startDate: '',
+                deadline: '', todoListId: 'Todolist1Id', order: 0, addedDate: ''
+            },
+            {
+                id: v1(), title: '2 task', description: '', status: TaskStatuses.New, priority: 0, startDate: '',
+                deadline: '', todoListId: 'Todolist1Id', order: 0, addedDate: ''
+            },
         ],
-        ['Todolist2Id'] : [
-            {id: v1(), title: '1 task', description: '', status: TaskStatuses.New, priority: 0, startDate: '',
-                deadline: '', todoListId: 'Todolist2Id', order: 0, addedDate: ''},
-            {id: v1(), title: '2 task', description: '', status: TaskStatuses.New, priority: 0, startDate: '',
-                deadline: '', todoListId: 'Todolist2Id', order: 0, addedDate: ''},
+        ['Todolist2Id']: [
+            {
+                id: v1(), title: '1 task', description: '', status: TaskStatuses.New, priority: 0, startDate: '',
+                deadline: '', todoListId: 'Todolist2Id', order: 0, addedDate: ''
+            },
+            {
+                id: v1(), title: '2 task', description: '', status: TaskStatuses.New, priority: 0, startDate: '',
+                deadline: '', todoListId: 'Todolist2Id', order: 0, addedDate: ''
+            },
         ],
-    }
+    },
+    app: {
+        error: null,
+        status: "idle",
+    },
 }
 
 export const storyBookStore = createStore(mainReducer, InitialStoryBookState)

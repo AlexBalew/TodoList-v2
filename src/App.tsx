@@ -3,7 +3,17 @@ import './App.css';
 import {OwnTodoList} from "./OwnTodoList";
 import {AddItemForm} from "./AddItemForm";
 import AppBar from '@material-ui/core/AppBar/AppBar';
-import {Button, Container, Grid, IconButton, makeStyles, Paper, Toolbar, Typography} from "@material-ui/core";
+import {
+    Button,
+    Container,
+    Grid,
+    IconButton,
+    LinearProgress,
+    makeStyles,
+    Paper,
+    Toolbar,
+    Typography
+} from "@material-ui/core";
 import {Menu} from '@material-ui/icons';
 import {useDispatch, useSelector} from "react-redux";
 import {MainReducerType} from "./store/store";
@@ -20,6 +30,7 @@ import {
     TodolistDomainType
 } from "./Reducers/todolist.reducer";
 import {ResponseTaskType, TaskStatuses} from "./api/Todolists.api";
+import {ErrorSnackBar} from "./components/errorSnackBar/ErrorSnackBar";
 
 export type TasksStateType = {
     [key: string]: Array<ResponseTaskType>
@@ -88,6 +99,7 @@ function App() {
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
+                    <ErrorSnackBar/>
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <Menu/>
                     </IconButton>
@@ -96,6 +108,7 @@ function App() {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
+                <LinearProgress color={'secondary'}/>
             </AppBar>
 
             <Container fixed>
