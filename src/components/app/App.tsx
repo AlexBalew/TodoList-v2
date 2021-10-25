@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react';
-import './App.css';
-import {OwnTodoList} from "./OwnTodoList";
-import {AddItemForm} from "./AddItemForm";
+import '../../App.css';
+import {TodoList} from "../todoList/TodoList";
+import {AddItemForm} from "../addItemForm/AddItemForm";
 import AppBar from '@material-ui/core/AppBar/AppBar';
 import {
     Button,
@@ -16,21 +16,22 @@ import {
 } from "@material-ui/core";
 import {Menu} from '@material-ui/icons';
 import {useDispatch, useSelector} from "react-redux";
-import {MainReducerType} from "./store/store";
+import {MainReducerType} from "../../store/store";
 import {
     addTaskTC,
     changeTaskStatusTC, changeTaskTitleTC,
     deleteTaskTC,
-} from "./Reducers/tasks.reducer";
+} from "../../Reducers/tasks.reducer";
 import {
     addTodolistTC,
     changeTDlFilterAC,
     changeTodolistTitleTC, FilterType, getTodolistsTC,
     removeTodolistsTC,
     TodolistDomainType
-} from "./Reducers/todolist.reducer";
-import {ResponseTaskType, TaskStatuses} from "./api/Todolists.api";
-import {ErrorSnackBar} from "./components/errorSnackBar/ErrorSnackBar";
+} from "../../Reducers/todolist.reducer";
+import {ResponseTaskType, TaskStatuses} from "../../api/Todolists.api";
+import {ErrorSnackBar} from "../errorSnackBar/ErrorSnackBar";
+import {RequestStatusType} from "../../Reducers/app-reducer";
 
 export type TasksStateType = {
     [key: string]: Array<ResponseTaskType>
@@ -50,13 +51,21 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function App() {
+type PropsType = {
+    demo?: boolean
+}
+
+
+function App({demo = false}: PropsType) {
 
     let dispatch = useDispatch();
     let todolistsFromState = useSelector<MainReducerType, TodoListsType>(state => state.todoLists)
     let tasksFromState = useSelector<MainReducerType, TasksStateType>(state => state.tasks)
 
     useEffect(() => {
+        if(demo){
+            return
+        }
         dispatch(getTodolistsTC())
     }, [])
 
@@ -94,8 +103,9 @@ function App() {
 
     const classes = useStyles();
 
-    return (
+    const status = useSelector<MainReducerType, RequestStatusType>(state => state.app.status)
 
+    return (
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
@@ -108,7 +118,7 @@ function App() {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
-                <LinearProgress color={'secondary'}/>
+                { status === 'loading' && <LinearProgress color={'secondary'}/>}
             </AppBar>
 
             <Container fixed>
@@ -120,19 +130,18 @@ function App() {
                             let filteredTasks = tasksFromState[tl.id]
                             return <Grid item>
                                 <Paper style={{padding: '10px'}}>
-                                    <OwnTodoList
+                                    <TodoList
                                         key={tl.id}
-                                        id={tl.id}
-                                        title={tl.title}
                                         tasks={filteredTasks}
                                         deleteTask={deleteTask}
                                         changeFilter={changeFilter}
                                         addTask={addTask}
-                                        filter={tl.filter}
                                         changeTaskStatus={changeTaskStatus}
                                         removeTDFunc={removeTDFunc}
                                         onChangeTaskTitle={onChangeTaskTitle}
                                         changeTDListTitleAPP={changeTDListTitleAPP}
+                                        demo={demo}
+                                        todolist={tl}
                                     />
                                 </Paper>
                             </Grid>

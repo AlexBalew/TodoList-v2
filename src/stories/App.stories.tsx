@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentMeta, Story} from '@storybook/react';
-import App from "./App";
-import {ReduxStoreProviderDecorator} from "./stories/Decorators/ReduxStoreProviderDecorator";
+import App from "../components/app/App";
+import {ReduxStoreProviderDecorator} from "./Decorators/ReduxStoreProviderDecorator";
 
 
 
@@ -16,7 +16,7 @@ export default {
 
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: Story = () => <App />;
+const Template: Story = () => <App demo={true}/>;
 
 export const AppExample = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
