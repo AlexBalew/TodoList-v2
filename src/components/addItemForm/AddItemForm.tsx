@@ -4,9 +4,10 @@ import {AddBox} from "@material-ui/icons";
 
 export type AddItemFormPropsType = {
     callback: (title: string) => void
+    disabled?: boolean
 }
 
-export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
+export const AddItemForm = React.memo(({callback, disabled = false}: AddItemFormPropsType) => {
 
     console.log('AddItemForm rendered')
 
@@ -21,7 +22,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
             setError('')
         }
         if (e.key === 'Enter' && title.trim() !== '') {
-            props.callback(title)
+            callback(title)
             setTitle('')
         }
         if (e.key === 'Enter' && title.trim() === '') {
@@ -31,7 +32,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
 
     const addTaskButton = () => {
         if (title.trim() !== '') {
-            props.callback(title)
+            callback(title)
             setTitle('')
         } else {
             setError('Insert TaskName')
@@ -41,6 +42,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
     return (
         <div>
             <TextField
+                disabled={disabled}
                 size={'small'}
                 variant={'outlined'}
                 value={title}
@@ -49,7 +51,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
                 error={!!error}
                 label='Title'
                 helperText={error}/>
-            <IconButton color={'secondary'} size={'small'} onClick={addTaskButton}>
+            <IconButton color={'secondary'} size={'small'} onClick={addTaskButton} disabled={disabled}>
                 <AddBox/>
             </IconButton>
         </div>

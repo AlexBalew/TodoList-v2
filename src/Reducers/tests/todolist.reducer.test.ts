@@ -1,14 +1,15 @@
 import {v1} from "uuid";
-import {TodoListsType} from "../App";
+import {TodoListsType} from "../../components/app/App";
 import {
-    addTDlAC,
+    addTDlAC, changeTDlEntityStatusAC,
     changeTDlFilterAC,
     changeTDlTitleAC,
     FilterType,
     removeTDlAC,
     setTodolistsAC,
     todolistsReducer
-} from "./todolist.reducer";
+} from "../todolist.reducer";
+import {RequestStatusType} from "../app-reducer";
 
 let todolistID1: string
 let todolistID2: string
@@ -23,10 +24,10 @@ beforeEach(() => {
     todolistID4 = v1()
 
     startState = [
-        {id: todolistID1, title: 'Affairs', filter: 'all', order: 0, addedDate: ''},
-        {id: todolistID2, title: 'Music', filter: 'all', order: 0, addedDate: ''},
-        {id: todolistID3, title: 'Movies', filter: 'all', order: 0, addedDate: ''},
-        {id: todolistID4, title: 'TDList', filter: 'active', order: 0, addedDate: ''},
+        {id: todolistID1, title: 'Affairs', filter: 'all', order: 0, addedDate: '', entityStatus: 'idle'},
+        {id: todolistID2, title: 'Music', filter: 'all', order: 0, addedDate: '', entityStatus: 'succeeded'},
+        {id: todolistID3, title: 'Movies', filter: 'all', order: 0, addedDate: '', entityStatus: 'failed'},
+        {id: todolistID4, title: 'TDList', filter: 'active', order: 0, addedDate: '', entityStatus: 'idle'},
     ]
 })
 
@@ -76,4 +77,14 @@ test('todolists should be set', () => {
     expect(finalState[0].title).toBe('Affairs')
     expect(finalState[2].id).toBe(todolistID3)
     expect(finalState[3].filter).toBe('all')
+})
+
+test('exact todolists entity status should be changed', () => {
+
+    let newEntityStatus: RequestStatusType = 'succeeded'
+
+    const finalState = todolistsReducer(startState, changeTDlEntityStatusAC(newEntityStatus, todolistID1))
+
+    expect(finalState[0].entityStatus).toBe('succeeded')
+    expect(finalState[2].entityStatus).toBe('failed')
 })

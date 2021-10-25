@@ -1,6 +1,6 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import {AddItemForm} from "./AddItemForm";
+import {AddItemForm} from "../components/addItemForm/AddItemForm";
 import {action} from "@storybook/addon-actions";
 
 
@@ -20,7 +20,9 @@ export default {
 const Template: ComponentStory<typeof AddItemForm> = (args) => <AddItemForm {...args} />;
 
 export const AddItemFormExample = Template.bind({});
+
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 AddItemFormExample.args = {
-    callback: action('Button is clicked')
+    callback: action('Button is clicked'),
+    disabled: false
 };

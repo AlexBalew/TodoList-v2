@@ -1,8 +1,8 @@
 import {v1} from "uuid";
-import {TasksStateType} from "../App";
-import {addTaskAC, changeTaskStatusAC, deleteTaskAC, onChangeTaskTitleAC, setTasksAC, tasksReducer} from "./tasks.reducer";
-import {addTDlAC, removeTDlAC, setTodolistsAC} from "./todolist.reducer";
-import {TaskPriorities, TaskStatuses} from "../api/Todolists.api";
+import {TasksStateType} from "../../components/app/App";
+import {addTaskAC, changeTaskStatusAC, deleteTaskAC, onChangeTaskTitleAC, setTasksAC, tasksReducer} from "../tasks.reducer";
+import {addTDlAC, removeTDlAC, setTodolistsAC} from "../todolist.reducer";
+import {TaskPriorities, TaskStatuses} from "../../api/Todolists.api";
 
 let todolistID1 = v1()
 let todolistID2 = v1()
