@@ -42,7 +42,7 @@ type DeleteTodolistResponseType = { ///all types in generic one
 export type ResponseType<T = {}> = {
     resultCode: number
     messages: Array<string>
-    fieldsErrors: Array<string>
+    //fieldsErrors: Array<string>
     data: T
 }
 
@@ -115,7 +115,7 @@ export const tasksAPI = {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
     updateTask(todolistId: string, taskId: string, model: UpdateModelType) {
-        return instance.put<ResponseTasksType>(`todo-lists/${todolistId}/tasks/${taskId}`,
+        return instance.put<ResponseType<{data: ResponseTaskType}>>(`todo-lists/${todolistId}/tasks/${taskId}`,
             {
                 title: model.title,
                 description: model.description,
