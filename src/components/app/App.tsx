@@ -2,54 +2,29 @@ import React, {useCallback, useEffect} from 'react';
 import '../../App.css';
 import {TodoList} from "../todoList/TodoList";
 import {AddItemForm} from "../addItemForm/AddItemForm";
-import AppBar from '@material-ui/core/AppBar/AppBar';
-import {
-    Button,
-    Container,
-    Grid,
-    IconButton,
-    LinearProgress,
-    makeStyles,
-    Paper,
-    Toolbar,
-    Typography
-} from "@material-ui/core";
-import {Menu} from '@material-ui/icons';
 import {useDispatch, useSelector} from "react-redux";
 import {MainReducerType} from "../../store/store";
-import {
-    addTaskTC,
-    changeTaskStatusTC, changeTaskTitleTC,
-    deleteTaskTC,
-} from "../../Reducers/tasks.reducer";
+import {addTaskTC, changeTaskStatusTC, changeTaskTitleTC, deleteTaskTC,} from "../../Reducers/tasks.reducer";
 import {
     addTodolistTC,
     changeTDlFilterAC,
-    changeTodolistTitleTC, FilterType, getTodolistsTC,
+    changeTodolistTitleTC,
+    FilterType,
+    getTodolistsTC,
     removeTodolistsTC,
     TodolistDomainType
 } from "../../Reducers/todolist.reducer";
 import {ResponseTaskType, TaskStatuses} from "../../api/Todolists.api";
 import {ErrorSnackBar} from "../errorSnackBar/ErrorSnackBar";
 import {RequestStatusType} from "../../Reducers/app-reducer";
+import {AppBar, Button, Container, Grid, IconButton, LinearProgress, Paper, Toolbar, Typography} from "@mui/material";
+import {Menu} from "@mui/icons-material";
 
 export type TasksStateType = {
     [key: string]: Array<ResponseTaskType>
 }
 
 export type TodoListsType = Array<TodolistDomainType>
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    title: {
-        flexGrow: 1,
-    },
-}));
 
 type PropsType = {
     demo?: boolean
@@ -101,19 +76,19 @@ function App({demo = false}: PropsType) {
         dispatch(changeTodolistTitleTC(tlID, newTitle))
     }, [dispatch])
 
-    const classes = useStyles();
+    //const classes = useStyles();
 
     const status = useSelector<MainReducerType, RequestStatusType>(state => state.app.status)
 
     return (
-        <div className={classes.root}>
+        <div style={{flexGrow: 1}}>
             <AppBar position="static">
                 <Toolbar>
                     <ErrorSnackBar/>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                    <IconButton edge="start" style={{marginRight: 2  }} color="inherit" aria-label="menu">
                         <Menu/>
                     </IconButton>
-                    <Typography variant="h6" className={classes.title} align='center'>
+                    <Typography variant="h6" style={{flexGrow: 1}} align='center'>
                         ToDoList
                     </Typography>
                     <Button color="inherit">Login</Button>
