@@ -1,13 +1,16 @@
 import React from 'react';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
 import {useDispatch, useSelector} from "react-redux";
 import {MainReducerType} from "../../store/store";
 import {setAppErrorAC} from "../../Reducers/app-reducer";
+import {AlertProps, Snackbar} from "@mui/material";
+import MuiAlert from '@mui/material/Alert';
 
-function Alert(props: AlertProps) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props,
+    ref,
+) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export function ErrorSnackBar() {
     //const [open, setOpen] = React.useState(true);

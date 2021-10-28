@@ -1,13 +1,13 @@
 import React, {useCallback, useEffect} from "react";
 import {AddItemForm} from "../addItemForm/AddItemForm";
 import {EditableSpan} from "../editableSpan/EditableSpan";
-import {Button, IconButton} from "@material-ui/core";
-import {Delete} from "@material-ui/icons";
 import {Task} from "../task/Task";
 import {FilterType, TodolistDomainType} from "../../Reducers/todolist.reducer";
 import {ResponseTaskType, TaskStatuses} from "../../api/Todolists.api";
 import {useDispatch} from "react-redux";
 import {getTasksTC} from "../../Reducers/tasks.reducer";
+import {Button, IconButton} from "@mui/material";
+import {Delete} from "@mui/icons-material";
 
 
 export type ToDoListPropsType = {
@@ -31,7 +31,7 @@ export const TodoList = React.memo((props: ToDoListPropsType) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if(props.demo) {
+        if (props.demo) {
             return
         }
         dispatch(getTasksTC(props.todolist.id))
@@ -51,7 +51,7 @@ export const TodoList = React.memo((props: ToDoListPropsType) => {
         props.removeTDFunc(props.todolist.id)
     }
 
-    const ChangeTDListTitle = useCallback( (newTitle: string) => {
+    const ChangeTDListTitle = useCallback((newTitle: string) => {
         props.changeTDListTitleAPP(props.todolist.id, newTitle)
     }, [props.changeTDListTitleAPP, props.todolist.id])
 
@@ -71,22 +71,25 @@ export const TodoList = React.memo((props: ToDoListPropsType) => {
     return (
         <div>
             <h3>
-                <EditableSpan title={props.todolist.title} onChange={ChangeTDListTitle}/>
-                <IconButton aria-label="delete" onClick={removeTDButton} disabled={props.todolist.entityStatus === 'loading'}>
+                <EditableSpan title={props.todolist.title} onChange={ChangeTDListTitle} todolist={props.todolist}/>
+                <IconButton aria-label="delete" onClick={removeTDButton}
+                            disabled={props.todolist.entityStatus === 'loading'}>
                     <Delete/>
                 </IconButton>
             </h3>
             <AddItemForm callback={addTaskBridge} disabled={props.todolist.entityStatus === 'loading'}/>
 
             <div>
-                <ul style={{listStyle: 'none', paddingLeft: 0}} >
+                <ul style={{listStyle: 'none', paddingLeft: 0}}>
                     {
                         tasksForTDList.map(t => <Task key={t.id}
-                                                                 task={t}
-                                                                 deleteTask={props.deleteTask}
-                                                                 changeTaskStatus={props.changeTaskStatus}
-                                                                 onChangeTaskTitle={props.onChangeTaskTitle}
-                                                                 todolistId={props.todolist.id} />)
+                                                      task={t}
+                                                      deleteTask={props.deleteTask}
+                                                      changeTaskStatus={props.changeTaskStatus}
+                                                      onChangeTaskTitle={props.onChangeTaskTitle}
+                                                      todolistId={props.todolist.id}
+                                                      todolist={props.todolist}
+                        />)
                     }
                 </ul>
                 <Button color={props.todolist.filter === 'all' ? 'secondary' : 'primary'}

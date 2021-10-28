@@ -1,13 +1,16 @@
-import {IconButton, TextField} from "@material-ui/core";
+import TextField from "@mui/material/TextField";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {AddBox} from "@material-ui/icons";
+import {IconButton} from "@mui/material";
+import { AddBox } from "@mui/icons-material";
+
 
 export type AddItemFormPropsType = {
     callback: (title: string) => void
     disabled?: boolean
+    label?: string
 }
 
-export const AddItemForm = React.memo(({callback, disabled = false}: AddItemFormPropsType) => {
+export const AddItemForm = React.memo(({callback, disabled = false, label = 'new task title'}: AddItemFormPropsType) => {
 
     console.log('AddItemForm rendered')
 
@@ -35,12 +38,13 @@ export const AddItemForm = React.memo(({callback, disabled = false}: AddItemForm
             callback(title)
             setTitle('')
         } else {
-            setError('Insert TaskName')
+            setError('Insert new title')
         }
     }
 
+
     return (
-        <div>
+        <div style={{height: '50px'}}>
             <TextField
                 disabled={disabled}
                 size={'small'}
@@ -49,8 +53,9 @@ export const AddItemForm = React.memo(({callback, disabled = false}: AddItemForm
                 onChange={onChangeNewTaskTitleHandler}
                 onKeyPress={onKeyPressHandler}
                 error={!!error}
-                label='Title'
-                helperText={error}/>
+                label={label ? label : 'Title'}
+                helperText={error}
+                style={{background: '#FFFFFF', borderRadius: 5}}/>
             <IconButton color={'secondary'} size={'small'} onClick={addTaskButton} disabled={disabled}>
                 <AddBox/>
             </IconButton>
