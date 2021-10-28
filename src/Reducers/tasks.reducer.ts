@@ -1,4 +1,3 @@
-import {TasksStateType} from "../components/app/App";
 import {addTDlType, RemoveTDlType, setTodolistsACType} from "./todolist.reducer";
 import {ResponseTaskType, tasksAPI, TaskStatuses} from "../api/Todolists.api";
 import {Dispatch} from "redux";
@@ -7,6 +6,9 @@ import {setAPPErrorACType, setAppStatusAC, setAppStatusACType} from "./app-reduc
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
 
+export type TasksStateType = {
+    [key: string]: Array<ResponseTaskType>
+}
 let initialState: TasksStateType = {}
 
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionSType): TasksStateType => {

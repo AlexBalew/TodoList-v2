@@ -3,6 +3,7 @@ import {EditableSpan} from "../editableSpan/EditableSpan";
 import {ResponseTaskType, TaskStatuses} from "../../api/Todolists.api";
 import {Checkbox, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
+import {TodolistDomainType} from "../../Reducers/todolist.reducer";
 
 
 type TaskPropsType = {
@@ -11,6 +12,7 @@ type TaskPropsType = {
     deleteTask: (tlID: string, tID: string) => void
     task: ResponseTaskType
     todolistId: string
+    todolist: TodolistDomainType
 }
 export const Task = React.memo((props: TaskPropsType) => {
 
@@ -24,8 +26,8 @@ export const Task = React.memo((props: TaskPropsType) => {
 
     return <li key={props.task.id} className={props.task.status === TaskStatuses.Completed ? 'completedTask' : ''}>
         <Checkbox onChange={onChangeCheckedHandler} checked={props.task.status === TaskStatuses.Completed}/>
-        <EditableSpan title={props.task.title} onChange={onChangeTitleHandler}/>
-        <IconButton aria-label="delete" onClick={() => props.deleteTask(props.todolistId, props.task.id)}>
+        <EditableSpan title={props.task.title} onChange={onChangeTitleHandler} todolist={props.todolist}/>
+        <IconButton aria-label="delete" onClick={() => props.deleteTask(props.todolistId, props.task.id)} disabled={props.todolist.entityStatus === 'loading'}>
             <Delete/>
         </IconButton>
     </li>

@@ -4,7 +4,13 @@ import {TodoList} from "../todoList/TodoList";
 import {AddItemForm} from "../addItemForm/AddItemForm";
 import {useDispatch, useSelector} from "react-redux";
 import {MainReducerType} from "../../store/store";
-import {addTaskTC, changeTaskStatusTC, changeTaskTitleTC, deleteTaskTC,} from "../../Reducers/tasks.reducer";
+import {
+    addTaskTC,
+    changeTaskStatusTC,
+    changeTaskTitleTC,
+    deleteTaskTC,
+    TasksStateType,
+} from "../../Reducers/tasks.reducer";
 import {
     addTodolistTC,
     changeTDlFilterAC,
@@ -14,22 +20,17 @@ import {
     removeTodolistsTC,
     TodolistDomainType
 } from "../../Reducers/todolist.reducer";
-import {ResponseTaskType, TaskStatuses} from "../../api/Todolists.api";
+import {TaskStatuses} from "../../api/Todolists.api";
 import {ErrorSnackBar} from "../errorSnackBar/ErrorSnackBar";
 import {RequestStatusType} from "../../Reducers/app-reducer";
 import {AppBar, Button, Container, Grid, IconButton, LinearProgress, Paper, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
-
-export type TasksStateType = {
-    [key: string]: Array<ResponseTaskType>
-}
 
 export type TodoListsType = Array<TodolistDomainType>
 
 type PropsType = {
     demo?: boolean
 }
-
 
 function App({demo = false}: PropsType) {
 
@@ -76,15 +77,14 @@ function App({demo = false}: PropsType) {
         dispatch(changeTodolistTitleTC(tlID, newTitle))
     }, [dispatch])
 
-    //const classes = useStyles();
 
     const status = useSelector<MainReducerType, RequestStatusType>(state => state.app.status)
 
     return (
-        <div style={{flexGrow: 1}}>
-            <AppBar position="static">
+        <div style={{flexGrow: 1, background: '#E0E0E0', minHeight: '100vh', paddingBottom: '20px'}}>
+            <AppBar position="static" color="default">
                 <Toolbar>
-                    <ErrorSnackBar/>
+                    <ErrorSnackBar />
                     <IconButton edge="start" style={{marginRight: 2  }} color="inherit" aria-label="menu">
                         <Menu/>
                     </IconButton>
@@ -98,9 +98,9 @@ function App({demo = false}: PropsType) {
 
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>
-                    <AddItemForm callback={addTDList}/>
+                    <AddItemForm callback={addTDList} label={'new todolist title'}/>
                 </Grid>
-                <Grid container spacing={4}>
+                <Grid container spacing={4} >
                     {todolistsFromState.map(tl => {
                             let filteredTasks = tasksFromState[tl.id]
                             return <Grid item>

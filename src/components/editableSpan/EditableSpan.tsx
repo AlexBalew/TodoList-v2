@@ -1,8 +1,10 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import {TodolistDomainType} from "../../Reducers/todolist.reducer";
 
 export type editableSpanPropsType = {
     title: string
     onChange: (newValue: string) => void
+    todolist: TodolistDomainType
 }
 
 export const EditableSpan = React.memo((props: editableSpanPropsType) => {
@@ -35,7 +37,7 @@ export const EditableSpan = React.memo((props: editableSpanPropsType) => {
 
     return (editMode
             ? <input onChange={onChangeTitleHandler} value={title} autoFocus onBlur={setViewNode}
-                     onKeyPress={onKeyPressHandler}/>
+                     onKeyPress={onKeyPressHandler} disabled={props.todolist.entityStatus === 'loading'}/>
             : <span onDoubleClick={activateEditMode}>{props.title}</span>
     )
 
