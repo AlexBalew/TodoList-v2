@@ -3,8 +3,7 @@ import {addTDlType, RemoveTDlType, setTodolistsACType} from "./todolist.reducer"
 import {ResponseTaskType, tasksAPI, TaskStatuses} from "../api/Todolists.api";
 import {Dispatch} from "redux";
 import {MainReducerType} from "../store/store";
-import {setAppStatusAC, setAppStatusACType, setAppErrorAC, setAPPErrorACType} from "./app-reducer";
-import {Simulate} from "react-dom/test-utils";
+import {setAPPErrorACType, setAppStatusAC, setAppStatusACType} from "./app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
 
@@ -128,24 +127,38 @@ export const setTasksAC = (todolistID: string, tasks: Array<ResponseTaskType>) =
     } as const
 }
 
-export const getTasksTC = (todolistID: string) => (dispatch: DispatchType) => {
+export const getTasksTC = (todolistID: string) => (dispatch: DispatchType) => { //сделать
     dispatch(setAppStatusAC('loading'))
     tasksAPI.getTasks(todolistID)
         .then(res => {
+            if(res.data.error == null) {
                 dispatch(setTasksAC(todolistID, res.data.items))
                 dispatch(setAppStatusAC('succeeded'))
+            } else {
+               // handleServerAppError(res, dispatch)
             }
+        }
         )
+        .catch((error) => {
+            handleServerNetworkError(error, dispatch)
+        })
 }
 
 export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: DispatchType) => {
     dispatch(setAppStatusAC('loading'))
     tasksAPI.deleteTask(todolistId, taskId)
         .then((res) => {
+            if(res.data.resultCode === 0){
                 dispatch(deleteTaskAC(todolistId, taskId))
                 dispatch(setAppStatusAC('succeeded'))
+            } else {
+                handleServerAppError(res.data, dispatch)
             }
+        }
         )
+        .catch((error) => {
+            handleServerNetworkError(error, dispatch)
+        })
 }
 
 export const addTaskTC = (todolistId: string, title: string) => (dispatch: DispatchType) => {
