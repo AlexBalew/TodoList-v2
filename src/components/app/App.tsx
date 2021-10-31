@@ -25,6 +25,8 @@ import {ErrorSnackBar} from "../errorSnackBar/ErrorSnackBar";
 import {RequestStatusType} from "../../Reducers/app-reducer";
 import {AppBar, Button, Container, Grid, IconButton, LinearProgress, Paper, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
+import {Login} from "../login/login";
+import {BrowserRouter, Route} from "react-router-dom";
 
 export type TodoListsType = Array<TodolistDomainType>
 
@@ -39,7 +41,7 @@ function App({demo = false}: PropsType) {
     let tasksFromState = useSelector<MainReducerType, TasksStateType>(state => state.tasks)
 
     useEffect(() => {
-        if(demo){
+        if (demo) {
             return
         }
         dispatch(getTodolistsTC())
@@ -81,50 +83,59 @@ function App({demo = false}: PropsType) {
     const status = useSelector<MainReducerType, RequestStatusType>(state => state.app.status)
 
     return (
-        <div style={{flexGrow: 1, background: '#E0E0E0', minHeight: '100vh', paddingBottom: '20px'}}>
-            <AppBar position="static" color="default">
-                <Toolbar>
-                    <ErrorSnackBar />
-                    <IconButton edge="start" style={{marginRight: 2  }} color="inherit" aria-label="menu">
-                        <Menu/>
-                    </IconButton>
-                    <Typography variant="h6" style={{flexGrow: 1}} align='center'>
-                        ToDoList
-                    </Typography>
-                    <Button color="inherit">Login</Button>
-                </Toolbar>
-                { status === 'loading' && <LinearProgress color={'secondary'}/>}
-            </AppBar>
+        <BrowserRouter>
+            <div style={{flexGrow: 1, background: '#E0E0E0', minHeight: '100vh', paddingBottom: '20px'}}>
+                <AppBar position="static" color="default">
+                    <Toolbar>
+                        <ErrorSnackBar/>
+                        <IconButton edge="start" style={{marginRight: 2}} color="inherit" aria-label="menu">
+                            <Menu/>
+                        </IconButton>
+                        <Typography variant="h6" style={{flexGrow: 1}} align='center'>
+                            ToDoList
+                        </Typography>
+                        <Button color="inherit">Login</Button>
+                    </Toolbar>
+                    {status === 'loading' && <LinearProgress color={'secondary'}/>}
+                </AppBar>
 
-            <Container fixed>
-                <Grid container style={{padding: '20px'}}>
-                    <AddItemForm callback={addTDList} label={'new todolist title'}/>
-                </Grid>
-                <Grid container spacing={4} >
-                    {todolistsFromState.map(tl => {
-                            let filteredTasks = tasksFromState[tl.id]
-                            return <Grid item>
-                                <Paper style={{padding: '10px'}}>
-                                    <TodoList
-                                        key={tl.id}
-                                        tasks={filteredTasks}
-                                        deleteTask={deleteTask}
-                                        changeFilter={changeFilter}
-                                        addTask={addTask}
-                                        changeTaskStatus={changeTaskStatus}
-                                        removeTDFunc={removeTDFunc}
-                                        onChangeTaskTitle={onChangeTaskTitle}
-                                        changeTDListTitleAPP={changeTDListTitleAPP}
-                                        demo={demo}
-                                        todolist={tl}
-                                    />
-                                </Paper>
-                            </Grid>
-                        }
-                    )}
-                </Grid>
-            </Container>
-        </div>
+                <Container fixed>
+                    <Route exact path={'/'} render={() => {
+                        return (
+                            <>
+                                <Grid container style={{padding: '20px'}}>
+                                    <AddItemForm callback={addTDList} label={'new todolist title'}/>
+                                </Grid>
+                                <Grid container spacing={4}>
+                                    {todolistsFromState.map(tl => {
+                                            let filteredTasks = tasksFromState[tl.id]
+                                            return <Grid item>
+                                                <Paper style={{padding: '10px'}}>
+                                                    <TodoList
+                                                        key={tl.id}
+                                                        tasks={filteredTasks}
+                                                        deleteTask={deleteTask}
+                                                        changeFilter={changeFilter}
+                                                        addTask={addTask}
+                                                        changeTaskStatus={changeTaskStatus}
+                                                        removeTDFunc={removeTDFunc}
+                                                        onChangeTaskTitle={onChangeTaskTitle}
+                                                        changeTDListTitleAPP={changeTDListTitleAPP}
+                                                        demo={demo}
+                                                        todolist={tl}
+                                                    />
+                                                </Paper>
+                                            </Grid>
+                                        }
+                                    )}
+                                </Grid>
+                            </>
+                        )
+                    }}/>
+                    <Route path={'/login'} render={() => <Login/>} />
+                </Container>
+            </div>
+        </BrowserRouter>
     );
 }
 
