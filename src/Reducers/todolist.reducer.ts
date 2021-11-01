@@ -108,7 +108,6 @@ export const setTodolistsAC = (todolists: Array<TodolistType>) => {
 }
 
 export const getTodolistsTC = () => (dispatch: DispatchType) => {
-    debugger
     dispatch(setAppStatusAC('loading'))
     todolistsAPI.getTDLists()
         .then(res => {

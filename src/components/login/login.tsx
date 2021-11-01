@@ -1,4 +1,4 @@
-import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, TextField} from "@mui/material"
+import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField} from "@mui/material"
 import {useFormik} from 'formik'
 import {useDispatch, useSelector} from "react-redux";
 import {authTC} from "../../Reducers/authReducer";
@@ -43,7 +43,21 @@ export const Login = () => {
         <Grid item m={4}>
             <form onSubmit={formik.handleSubmit}>
                 <FormControl>
-                    {/*<FormLabel...> //place text*/}
+                    <FormLabel>
+                        <p>
+                            To log in, please, get registration <a href={'https://social-network.samuraijs.com/'}
+                                                                   target={'_blank'}>here</a>
+                        </p>
+                        <p>
+                            ro use these test account credentials:
+                        </p>
+                        <p>
+                            Email: free@samuraijs.com
+                        </p>
+                        <p>
+                            Password: free
+                        </p>
+                    </FormLabel>
                     <FormGroup>
                         <TextField
                             label='email'
