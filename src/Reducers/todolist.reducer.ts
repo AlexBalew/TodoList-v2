@@ -16,22 +16,22 @@ type DispatchType = Dispatch<ActionSType | setAppStatusACType | setAPPErrorACTyp
 
 export const todolistsReducer = (state: Array<TodolistDomainType> = initialState, action: ActionSType): Array<TodolistDomainType> => {
     switch (action.type) {
-        case 'REMOVE_TODOLIST' : {
+        case 'todolists/REMOVE_TODOLIST' : {
             return state.filter(tl => tl.id !== action.id)
         }
-        case 'ADD_TODOLIST' : {
+        case 'todolists/ADD_TODOLIST' : {
             return [...state, {...action.todoList, filter: 'all', entityStatus: 'idle'}]
         }
-        case 'CHANGE_TDL_TITLE' : {
+        case 'todolists/CHANGE_TDL_TITLE' : {
             return state.map(tl => tl.id === action.id ? {...tl, title: action.title} : tl)
         }
-        case 'CHANGE_TDL_FILTER' : {
+        case 'todolists/CHANGE_TDL_FILTER' : {
             return state.map(tl => tl.id === action.id ? {...tl, filter: action.filter} : tl)
         }
-        case 'CHANGE_TDL_ENTITY_STATUS' : {
+        case 'todolists/CHANGE_TDL_ENTITY_STATUS' : {
             return state.map(tl => tl.id === action.id ? {...tl, entityStatus: action.status} : tl)
         }
-        case 'SET_TODOLISTS' : {
+        case 'todolists/SET_TODOLISTS' : {
             return action.todolists.map(tl => {
                     return {...tl, filter: "all", entityStatus: 'idle'}
                 }
@@ -54,7 +54,7 @@ export type RemoveTDlType = ReturnType<typeof removeTDlAC>
 
 export const removeTDlAC = (todolistID: string) => {
     return {
-        type: 'REMOVE_TODOLIST',
+        type: 'todolists/REMOVE_TODOLIST',
         id: todolistID
     } as const
 }
@@ -63,7 +63,7 @@ export type addTDlType = ReturnType<typeof addTDlAC>
 
 export const addTDlAC = (todoList: TodolistType) => {
     return {
-        type: 'ADD_TODOLIST',
+        type: 'todolists/ADD_TODOLIST',
         todoList
     } as const
 }
@@ -72,7 +72,7 @@ type changeTDlTitleType = ReturnType<typeof changeTDlTitleAC>
 
 export const changeTDlTitleAC = (todolistId: string, title: string) => {
     return {
-        type: 'CHANGE_TDL_TITLE',
+        type: 'todolists/CHANGE_TDL_TITLE',
         id: todolistId,
         title
     } as const
@@ -80,11 +80,11 @@ export const changeTDlTitleAC = (todolistId: string, title: string) => {
 
 type changeTDlFilterType = ReturnType<typeof changeTDlFilterAC>
 
-export const changeTDlFilterAC = (filter: FilterType, tlID: string) => {
+export const changeTDlFilterAC = (filter: FilterType, todolistId: string) => {
     return {
-        type: 'CHANGE_TDL_FILTER',
+        type: 'todolists/CHANGE_TDL_FILTER',
         filter,
-        id: tlID,
+        id: todolistId,
     } as const
 }
 
@@ -92,7 +92,7 @@ type changeTDlEntityStatusACType = ReturnType<typeof changeTDlEntityStatusAC>
 
 export const changeTDlEntityStatusAC = (status: RequestStatusType, tlID: string) => {
     return {
-        type: 'CHANGE_TDL_ENTITY_STATUS',
+        type: 'todolists/CHANGE_TDL_ENTITY_STATUS',
         status,
         id: tlID,
     } as const
@@ -102,7 +102,7 @@ export type setTodolistsACType = ReturnType<typeof setTodolistsAC>
 
 export const setTodolistsAC = (todolists: Array<TodolistType>) => {
     return {
-        type: 'SET_TODOLISTS',
+        type: 'todolists/SET_TODOLISTS',
         todolists,
     } as const
 }

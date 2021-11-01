@@ -7,9 +7,9 @@ import {TodolistDomainType} from "../../Reducers/todolist.reducer";
 
 
 type TaskPropsType = {
-    changeTaskStatus: (tlID: string, tID: string, status: TaskStatuses) => void
-    onChangeTaskTitle: (tlID: string, tID: string, newTitle: string) => void
-    deleteTask: (tlID: string, tID: string) => void
+    changeTaskStatus: (todolistId: string, taskId: string, status: TaskStatuses) => void
+    onChangeTaskTitle: (todolistId: string, taskId: string, newTitle: string) => void
+    deleteTask: (todolistId: string, taskId: string) => void
     task: ResponseTaskType
     todolistId: string
     todolist: TodolistDomainType
