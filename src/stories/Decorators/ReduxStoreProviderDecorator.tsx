@@ -44,7 +44,11 @@ const InitialStoryBookState: MainReducerType = {
     app: {
         error: null,
         status: "idle",
+        isAppInitialized: true,
     },
+    login: {
+        isLoggedIn: true
+    }
 }
 
 export const storyBookStore = createStore(mainReducer, InitialStoryBookState, applyMiddleware(thunk))

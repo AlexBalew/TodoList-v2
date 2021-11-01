@@ -22,11 +22,12 @@ import {
 } from "../../Reducers/todolist.reducer";
 import {TaskStatuses} from "../../api/Todolists.api";
 import {ErrorSnackBar} from "../errorSnackBar/ErrorSnackBar";
-import {RequestStatusType} from "../../Reducers/app-reducer";
+import {initializeAppTC, RequestStatusType} from "../../Reducers/app-reducer";
 import {AppBar, Button, Container, Grid, IconButton, LinearProgress, Paper, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
 import {Login} from "../login/login";
-import {BrowserRouter, Route} from "react-router-dom";
+import {Route} from "react-router-dom";
+import {logOutTC} from "../../Reducers/authReducer";
 
 export type TodoListsType = Array<TodolistDomainType>
 
@@ -36,12 +37,29 @@ type PropsType = {
 
 function App({demo = false}: PropsType) {
 
-    let dispatch = useDispatch();
-    let todolistsFromState = useSelector<MainReducerType, TodoListsType>(state => state.todoLists)
-    let tasksFromState = useSelector<MainReducerType, TasksStateType>(state => state.tasks)
+    const dispatch = useDispatch();
+    const todolistsFromState = useSelector<MainReducerType, TodoListsType>(state => state.todoLists)
+    const tasksFromState = useSelector<MainReducerType, TasksStateType>(state => state.tasks)
+    const isInitialized = useSelector<MainReducerType, boolean>(state => state.app.isAppInitialized)
+    const isLoggedIn = useSelector<MainReducerType, boolean>(state => state.login.isLoggedIn)
+    const status = useSelector<MainReducerType, RequestStatusType>(state => state.app.status)
 
     useEffect(() => {
-        if (demo) {
+        dispatch(initializeAppTC())
+    }, [])
+
+    const logOutHandler = useCallback(() => {
+        dispatch(logOutTC())
+    }, [])
+
+
+    /* if(!isInitialized) { //невозможно разместить здесь из-за useCallback. Перенести useCallbacks в Todolist.tsx
+         return <CircularProgress /> //посмотреть другие варианты и стилизовать
+     }*/
+
+    useEffect(() => {
+        debugger
+        if (demo || !isLoggedIn) {
             return
         }
         dispatch(getTodolistsTC())
@@ -78,12 +96,13 @@ function App({demo = false}: PropsType) {
     const changeTDListTitleAPP = useCallback((tlID: string, newTitle: string) => {
         dispatch(changeTodolistTitleTC(tlID, newTitle))
     }, [dispatch])
+/*
+    if(!isLoggedIn) { //Перенести useCallbacks в Todolist.tsx
+        return <Redirect to={'/login'} /> //пофиксить отрисовку
+    }*/
 
-
-    const status = useSelector<MainReducerType, RequestStatusType>(state => state.app.status)
 
     return (
-        <BrowserRouter>
             <div style={{flexGrow: 1, background: '#E0E0E0', minHeight: '100vh', paddingBottom: '20px'}}>
                 <AppBar position="static" color="default">
                     <Toolbar>
@@ -94,7 +113,7 @@ function App({demo = false}: PropsType) {
                         <Typography variant="h6" style={{flexGrow: 1}} align='center'>
                             ToDoList
                         </Typography>
-                        <Button color="inherit">Login</Button>
+                        {isLoggedIn && <Button color="inherit" onClick={() => {logOutHandler()}}>Log out</Button>}
                     </Toolbar>
                     {status === 'loading' && <LinearProgress color={'secondary'}/>}
                 </AppBar>
@@ -135,7 +154,6 @@ function App({demo = false}: PropsType) {
                     <Route path={'/login'} render={() => <Login/>} />
                 </Container>
             </div>
-        </BrowserRouter>
     );
 }
 
