@@ -6,10 +6,20 @@ import {MainReducerType} from "../../store/store";
 import {TodolistDomainType} from "../../Reducers/todolist.reducer";
 import {ErrorSnackBar} from "../errorSnackBar/ErrorSnackBar";
 import {initializeAppTC, RequestStatusType} from "../../Reducers/app-reducer";
-import {AppBar, CircularProgress, Container, IconButton, LinearProgress, Toolbar, Typography} from "@mui/material";
+import {
+    AppBar,
+    Button,
+    CircularProgress,
+    Container,
+    IconButton,
+    LinearProgress,
+    Toolbar,
+    Typography
+} from "@mui/material";
 import {Menu} from "@mui/icons-material";
 import {logOutTC} from '../../Reducers/authReducer';
-import {Redirect} from "react-router-dom";
+import {BrowserRouter, Route} from "react-router-dom";
+import {Login} from "../login/login";
 
 export type TodoListsType = Array<TodolistDomainType>
 
@@ -33,17 +43,13 @@ function App  ({demo = false}: PropsType) {
     }, [])
 
 
-    if (!isInitialized) { //невозможно разместить здесь из-за useCallback. Перенести useCallbacks в Todolist.tsx
-        return <CircularProgress/> //посмотреть другие варианты и стилизовать
+    if (!isInitialized) {
+        return <CircularProgress/>
     }
 
 
-    if (!isLoggedIn) { //Перенести useCallbacks в Todolist.tsx
-        return <Redirect to={'/login'}/>
-    }//пофиксить отрисовку
-
-
     return (
+        <BrowserRouter>
         <div style={{flexGrow: 1, background: '#E0E0E0', minHeight: '100vh', paddingBottom: '20px'}}>
             <AppBar position="static" color="default">
                 <Toolbar>
@@ -54,15 +60,16 @@ function App  ({demo = false}: PropsType) {
                     <Typography variant="h6" style={{flexGrow: 1}} align='center'>
                         ToDoList
                     </Typography>
-                    {/*{isLoggedIn && <Button color="inherit" onClick={() => {logOutHandler()}}>Log out</Button>}*/}
+                    {isLoggedIn && <Button color="inherit" onClick={() => {logOutHandler()}}>Log out</Button>}
                 </Toolbar>
                 {status === 'loading' && <LinearProgress color={'secondary'}/>}
             </AppBar>
-
             <Container fixed>
-                <TodoLists/>
+                <Route path={'/login'} render={() => <Login/>} />
+                <Route exact path={'/'} render={() => <TodoLists />} />
             </Container>
         </div>
+        </BrowserRouter>
     );
 }
 

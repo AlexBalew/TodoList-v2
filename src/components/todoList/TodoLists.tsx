@@ -20,8 +20,7 @@ import {
 import {Grid, Paper} from "@mui/material";
 import {MainReducerType} from "../../store/store";
 import {TodoListsType} from "../app/App";
-import {Route} from "react-router-dom";
-import {Login} from "../login/login";
+import {Redirect} from "react-router-dom";
 import {TodoList} from "./todolist/todolist";
 
 
@@ -36,6 +35,7 @@ export const TodoLists = React.memo(({demo = false}: ToDoListPropsType) => {
     const dispatch = useDispatch();
     const todolistsFromState = useSelector<MainReducerType, TodoListsType>(state => state.todoLists)
     const tasksFromState = useSelector<MainReducerType, TasksStateType>(state => state.tasks)
+    const isLoggedIn = useSelector<MainReducerType, boolean>(state => state.login.isLoggedIn)
 
     useEffect(() => {
         if (demo) {
@@ -76,46 +76,44 @@ export const TodoLists = React.memo(({demo = false}: ToDoListPropsType) => {
         dispatch(changeTodolistTitleTC(todolistId, newTitle))
     }, [dispatch])
 
+    if (!isLoggedIn) {
+        return <Redirect to={'/login'}/>
+    }
 
     return (
-        <div>
-            <Route exact path={'/'} render={() => {
-                return (
-                    <>
-                        <Grid container style={{padding: '20px'}}>
-                            <AddItemForm callback={addTDList} label={'new todolist title'}/>
-                        </Grid>
-                        <Grid container spacing={4}>
-                            {todolistsFromState.map(tl => {
-                                    let filteredTasks = tasksFromState[tl.id]
+        <>
+            <Grid container style={{padding: '20px'}}>
+                <AddItemForm callback={addTDList} label={'new todolist title'}/>
+            </Grid>
+            <Grid container spacing={4}>
+                {todolistsFromState.map(tl => {
+                        let filteredTasks = tasksFromState[tl.id]
 
-                                    return <Grid item>
-                                        <Paper style={{padding: '10px'}}>
-                                            <TodoList
-                                                key={tl.id}
-                                                id={tl.id}
-                                                title={tl.title}
-                                                tasks={filteredTasks}
-                                                deleteTask={deleteTask}
-                                                changeFilter={changeFilter}
-                                                addTask={addTask}
-                                                changeTaskStatus={changeTaskStatus}
-                                                removeTDFunc={removeTDFunc}
-                                                onChangeTaskTitle={onChangeTaskTitle}
-                                                changeTDListTitleAPP={changeTDListTitleAPP}
-                                                demo={demo}
-                                                todolist={tl}
-                                            />
-                                        </Paper>
-                                    </Grid>
-                                }
-                            )}
+                        return <Grid item>
+                            <Paper style={{padding: '10px'}}>
+                                <TodoList
+                                    key={tl.id}
+                                    id={tl.id}
+                                    title={tl.title}
+                                    tasks={filteredTasks}
+                                    deleteTask={deleteTask}
+                                    changeFilter={changeFilter}
+                                    addTask={addTask}
+                                    changeTaskStatus={changeTaskStatus}
+                                    removeTDFunc={removeTDFunc}
+                                    onChangeTaskTitle={onChangeTaskTitle}
+                                    changeTDListTitleAPP={changeTDListTitleAPP}
+                                    demo={demo}
+                                    todolist={tl}
+                                />
+                            </Paper>
                         </Grid>
-                    </>
-                )
-            }}/>
-            <Route path={'/login'} render={() => <Login/>} />
-        </div>
+                    }
+                )}
+            </Grid>
+        </>
+
+
     )
 })
 
