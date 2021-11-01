@@ -1,32 +1,32 @@
-import React, {useCallback, useEffect} from "react";
-import {AddItemForm} from "../addItemForm/AddItemForm";
-import {EditableSpan} from "../editableSpan/EditableSpan";
-import {Task} from "../task/Task";
-import {FilterType, TodolistDomainType} from "../../Reducers/todolist.reducer";
-import {ResponseTaskType, TaskStatuses} from "../../api/Todolists.api";
-import {useDispatch} from "react-redux";
-import {getTasksTC} from "../../Reducers/tasks.reducer";
 import {Button, IconButton} from "@mui/material";
+import {AddItemForm} from "../../addItemForm/AddItemForm";
+import React, {useCallback, useEffect} from "react";
+import {getTasksTC} from "../../../Reducers/tasks.reducer";
+import {ResponseTaskType, TaskStatuses} from "../../../api/Todolists.api";
+import {EditableSpan} from "../../editableSpan/EditableSpan";
 import {Delete} from "@mui/icons-material";
+import {Task} from "../../task/Task";
+import {FilterType, TodolistDomainType} from "../../../Reducers/todolist.reducer";
+import {useDispatch} from "react-redux";
 
-
-export type ToDoListPropsType = {
-    todolist: TodolistDomainType
+type TodolistPropsType = {
+    id: string
+    title: string
     tasks: Array<ResponseTaskType>
+    changeFilter: (filter: FilterType, todolistId: string) => void
+    addTask: (todolistId: string, title: string) => void
+    changeTaskStatus: (todolistId: string, taskId: string, status: TaskStatuses, ) => void
+    onChangeTaskTitle: (todolistId: string, taskId: string, newTitle: string) => void
     deleteTask: (todolistId: string, taskId: string) => void
-    changeFilter: (filter: FilterType, tlID: string) => void
-    addTask: (tlID: string, newTaskTitle: string) => void
-    changeTaskStatus: (tlID: string, tID: string, status: TaskStatuses) => void
-    removeTDFunc: (tlID: string) => void
-    onChangeTaskTitle: (tlID: string, tID: string, newTitle: string) => void
-    changeTDListTitleAPP: (newTitle: string, tlID: string) => void
+    removeTDFunc: (todolistId: string) => void
+    changeTDListTitleAPP: (todolistId: string, newTitle: string) => void
+    todolist: TodolistDomainType
     demo?: boolean
 }
 
+export const TodoList = React.memo((props: TodolistPropsType) => {
 
-export const TodoList = React.memo((props: ToDoListPropsType) => {
-
-    console.log('Todolist rendered')
+    console.log('Todolist called')
 
     const dispatch = useDispatch()
 
@@ -36,6 +36,7 @@ export const TodoList = React.memo((props: ToDoListPropsType) => {
         }
         dispatch(getTasksTC(props.todolist.id))
     }, [])
+
 
     const allFilter = useCallback(() => {
         props.changeFilter('all', props.todolist.id)
@@ -69,7 +70,7 @@ export const TodoList = React.memo((props: ToDoListPropsType) => {
     }
 
     return (
-        <div>
+        <>
             <h3>
                 <EditableSpan title={props.todolist.title} onChange={ChangeTDListTitle} todolist={props.todolist}/>
                 <IconButton aria-label="delete" onClick={removeTDButton}
@@ -105,8 +106,6 @@ export const TodoList = React.memo((props: ToDoListPropsType) => {
                         onClick={completedFilter}
                         size={"small"}>Completed</Button>
             </div>
-        </div>
+        </>
     )
 })
-
-
