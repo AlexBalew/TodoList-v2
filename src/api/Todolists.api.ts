@@ -115,7 +115,7 @@ export const tasksAPI = {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
     updateTask(todolistId: string, taskId: string, model: UpdateModelType) {
-        return instance.put<ResponseType<{data: ResponseTaskType}>>(`todo-lists/${todolistId}/tasks/${taskId}`,
+        return instance.put<ResponseType<{ data: ResponseTaskType }>>(`todo-lists/${todolistId}/tasks/${taskId}`,
             {
                 title: model.title,
                 description: model.description,
@@ -124,5 +124,25 @@ export const tasksAPI = {
                 priority: model.priority,
                 startDate: model.startDate
             })
+    }
+}
+
+
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: string
+}
+
+export const authAPI = {
+    login(authParams: LoginParamsType) {
+        return instance.post<ResponseType<{ userId?: number }>>(`auth/login`, authParams)
+    },
+    authMe() {
+        return instance.get<ResponseType<{id: number, email: string, login: string}>>('auth/me')
+    },
+    logOut() {
+        return instance.delete<ResponseType<{ userId?: number }>>('/auth/login')
     }
 }
