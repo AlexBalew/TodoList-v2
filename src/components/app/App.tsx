@@ -44,7 +44,7 @@ function App  ({demo = false}: PropsType) {
 
 
     if (!isInitialized) {
-        return <CircularProgress/>
+        return <div style={{ display: "flex", justifyContent: "center", marginTop: "30%"}}><CircularProgress /></div>
     }
 
 
