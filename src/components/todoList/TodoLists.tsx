@@ -31,7 +31,6 @@ export type ToDoListPropsType = {
 
 export const TodoLists = React.memo(({demo = false}: ToDoListPropsType) => {
 
-    console.log('Todolist rendered')
     const dispatch = useDispatch();
     const todolistsFromState = useSelector<MainReducerType, TodoListsType>(state => state.todoLists)
     const tasksFromState = useSelector<MainReducerType, TasksStateType>(state => state.tasks)

@@ -39,17 +39,18 @@ export const Login = () => {
     }
 
 
-    return <Grid container justifyContent='center'>
+    return  <Grid container justifyContent='center'>
         <Grid item m={4}>
             <form onSubmit={formik.handleSubmit}>
                 <FormControl>
                     <FormLabel>
                         <p>
                             To log in, please, get registration <a href={'https://social-network.samuraijs.com/'}
-                                                                   target={'_blank'}>here</a>
+                                                                   target={'_blank'}
+                                                                   rel={"noreferrer"}>here</a>
                         </p>
                         <p>
-                            ro use these test account credentials:
+                            or use these test account credentials:
                         </p>
                         <p>
                             Email: free@samuraijs.com
