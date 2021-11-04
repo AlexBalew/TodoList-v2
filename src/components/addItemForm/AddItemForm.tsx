@@ -12,8 +12,6 @@ export type AddItemFormPropsType = {
 
 export const AddItemForm = React.memo(({callback, disabled = false, label = 'new task title'}: AddItemFormPropsType) => {
 
-    console.log('AddItemForm rendered')
-
     let [title, setTitle] = useState('')
     let [error, setError] = useState('')
 

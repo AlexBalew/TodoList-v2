@@ -66,7 +66,7 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
             if (res.data.resultCode === 0) {
                 dispatch(isLoggedInAC(true))
             } else {
-
+                dispatch(isLoggedInAC(false))
             }
             dispatch(setAppIsInitializedStatusAC(true))
         })

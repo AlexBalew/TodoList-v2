@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import {Menu} from "@mui/icons-material";
 import {logOutTC} from '../../Reducers/authReducer';
-import {BrowserRouter, Route} from "react-router-dom";
+import {Redirect, Route} from "react-router-dom";
 import {Login} from "../login/login";
 
 export type TodoListsType = Array<TodolistDomainType>
@@ -36,11 +36,11 @@ function App  ({demo = false}: PropsType) {
 
     useEffect(() => {
         dispatch(initializeAppTC())
-    }, [])
+    }, [dispatch])
 
     const logOutHandler = useCallback(() => {
         dispatch(logOutTC())
-    }, [])
+    }, [dispatch])
 
 
     if (!isInitialized) {
@@ -49,7 +49,6 @@ function App  ({demo = false}: PropsType) {
 
 
     return (
-        <BrowserRouter>
         <div style={{flexGrow: 1, background: '#E0E0E0', minHeight: '100vh', paddingBottom: '20px'}}>
             <AppBar position="static" color="default">
                 <Toolbar>
@@ -65,11 +64,11 @@ function App  ({demo = false}: PropsType) {
                 {status === 'loading' && <LinearProgress color={'secondary'}/>}
             </AppBar>
             <Container fixed>
+                {<Route path={'/TodoList-v2'} /> && <Redirect to={'login'}/>}
                 <Route path={'/login'} render={() => <Login/>} />
                 <Route exact path={'/'} render={() => <TodoLists />} />
             </Container>
         </div>
-        </BrowserRouter>
     );
 }
 
