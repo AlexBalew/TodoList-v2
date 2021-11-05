@@ -60,6 +60,9 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             copyState[action.todolistID] = action.tasks
             return copyState
         }
+        case 'task/CLEAR_REDUX': {
+          return {...initialState} = {}
+        }
         default:
             return state
     }
@@ -74,6 +77,7 @@ type ActionSType =
     | changeTaskStatusACType
     | setTodolistsACType
     | setTasksACType
+    | clearReduxACType
 
 type DispatchType = Dispatch<ActionSType | setAppStatusACType | setAPPErrorACType>
 
@@ -129,17 +133,25 @@ export const setTasksAC = (todolistID: string, tasks: Array<ResponseTaskType>) =
     } as const
 }
 
+export type clearReduxACType = ReturnType<typeof clearReduxAC>
+
+export const clearReduxAC = () => {
+    return {
+        type: 'task/CLEAR_REDUX',
+    } as const
+}
+
 export const getTasksTC = (todolistID: string) => (dispatch: DispatchType) => { //сделать
     dispatch(setAppStatusAC('loading'))
     tasksAPI.getTasks(todolistID)
         .then(res => {
-            if(res.data.error == null) {
-                dispatch(setTasksAC(todolistID, res.data.items))
-                dispatch(setAppStatusAC('succeeded'))
-            } else {
-              // handleServerAppError(res, dispatch)
+                if (res.data.error == null) {
+                    dispatch(setTasksAC(todolistID, res.data.items))
+                    dispatch(setAppStatusAC('succeeded'))
+                } else {
+                    // handleServerAppError(res, dispatch)
+                }
             }
-        }
         )
         .catch((error) => {
             handleServerNetworkError(error, dispatch)
@@ -150,13 +162,13 @@ export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: D
     dispatch(setAppStatusAC('loading'))
     tasksAPI.deleteTask(todolistId, taskId)
         .then((res) => {
-            if(res.data.resultCode === 0){
-                dispatch(deleteTaskAC(todolistId, taskId))
-                dispatch(setAppStatusAC('succeeded'))
-            } else {
-                handleServerAppError(res.data, dispatch)
+                if (res.data.resultCode === 0) {
+                    dispatch(deleteTaskAC(todolistId, taskId))
+                    dispatch(setAppStatusAC('succeeded'))
+                } else {
+                    handleServerAppError(res.data, dispatch)
+                }
             }
-        }
         )
         .catch((error) => {
             handleServerNetworkError(error, dispatch)

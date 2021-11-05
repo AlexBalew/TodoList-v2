@@ -37,6 +37,9 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
                 }
             )
         }
+        case 'todolists/CLEAR_REDUX': {
+            return {...initialState} = []
+        }
         default:
             return state
     }
@@ -49,6 +52,7 @@ type ActionSType =
     | changeTDlFilterType
     | setTodolistsACType
     | changeTDlEntityStatusACType
+    | clearTodoReduxACType
 
 export type RemoveTDlType = ReturnType<typeof removeTDlAC>
 
@@ -104,6 +108,14 @@ export const setTodolistsAC = (todolists: Array<TodolistType>) => {
     return {
         type: 'todolists/SET_TODOLISTS',
         todolists,
+    } as const
+}
+
+export type clearTodoReduxACType = ReturnType<typeof clearTodoReduxAC>
+
+export const clearTodoReduxAC = () => {
+    return {
+        type: 'todolists/CLEAR_REDUX',
     } as const
 }
 

@@ -14,7 +14,7 @@ export const Login = () => {
         validate: (values) => {
             if (!values.email) {
                 return {
-                    email: 'wrong email'
+                    email: 'insert correct email'
                 }
             }
             if (!values.password) {

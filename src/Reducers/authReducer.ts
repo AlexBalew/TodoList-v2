@@ -2,6 +2,8 @@ import {setAPPErrorACType, setAppStatusAC, setAppStatusACType} from "./app-reduc
 import {authAPI, LoginParamsType} from "../api/Todolists.api";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 import {Dispatch} from "redux";
+import {clearReduxAC, clearReduxACType} from "./tasks.reducer";
+import {clearTodoReduxAC, clearTodoReduxACType} from "./todolist.reducer";
 
 export type InitialStateType = {
     isLoggedIn : boolean
@@ -20,7 +22,7 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
     }
 }
 
-export type ActionsType = isLoggedInACType
+export type ActionsType = isLoggedInACType | clearReduxACType | clearTodoReduxACType
 
 export type isLoggedInACType = ReturnType<typeof isLoggedInAC>
 
@@ -53,6 +55,8 @@ export const logOutTC = () => (dispatch: DispatchType) => {
     authAPI.logOut()
         .then(res => {
                 if (res.data.resultCode === 0) {
+                    dispatch(clearTodoReduxAC())
+                    dispatch(clearReduxAC())
                     dispatch(isLoggedInAC(false))
                     dispatch(setAppStatusAC('succeeded'))
                 } else {
