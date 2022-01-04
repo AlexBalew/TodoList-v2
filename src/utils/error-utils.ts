@@ -10,10 +10,10 @@ export const handleServerAppError = <T = {}>(data: ResponseType<T>, dispatch: Di
         dispatch(setAppErrorAC('some error has occurred'))
     }
     dispatch(setAppStatusAC('failed'))
-
 }
 
 export const handleServerNetworkError = <T = {}>(error: {message: string}, dispatch: Dispatch<setAPPErrorACType | setAppStatusACType>) => {
     dispatch(setAppErrorAC(error.message ? error.message : 'Some error'))
     dispatch(setAppStatusAC('failed'))
 }
+
