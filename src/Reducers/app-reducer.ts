@@ -22,8 +22,7 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
         case 'APP/SET_STATUS':
             return {...state, status: action.status}
         case 'APP/SET_ERROR':
-            let a = {...state, error: action.error}
-            return a
+            return {...state, error: action.error}
         case 'APP/SET_IS_INITIALIZED_STATUS':
             return {...state, isAppInitialized: action.isAppInitialized}
         default:
@@ -62,7 +61,7 @@ export const setAppIsInitializedStatusAC = (isAppInitialized: boolean) => {
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
     authAPI.authMe()
-        .then(res => {
+        .then((res) => {
             if (res.data.resultCode === 0) {
                 dispatch(isLoggedInAC(true))
             } else {
